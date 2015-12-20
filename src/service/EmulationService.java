@@ -1,9 +1,12 @@
 package service;
 
 
+import com.google.common.eventbus.EventBus;
 import com.intellij.openapi.application.Application;
 import com.intellij.openapi.application.ApplicationManager;
 import model.GpsPoint;
+import model.event.EmulationStartedEvent;
+import model.event.EmulationStoppedEvent;
 import util.TelnetSession;
 
 import java.io.IOException;
@@ -15,6 +18,8 @@ import java.util.concurrent.Future;
  * Created by Thomas on 12/19/2015.
  */
 public class EmulationService {
+
+    private static EventBus bus = new EventBus();
 
     private TelnetSession telnetSession;
 
@@ -37,6 +42,7 @@ public class EmulationService {
         points.add(new GpsPoint(endLat, endLon));
 
         startPointEmulation(points, timeInterval);
+        getBus().post(new EmulationStartedEvent());
 
     }
 
@@ -67,6 +73,7 @@ public class EmulationService {
                         progressCallback.onProgressEvent(100);
                     }
                     telnetSession.endSession();
+                    getBus().post(new EmulationStoppedEvent());
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
@@ -81,5 +88,17 @@ public class EmulationService {
 
     public void setProgressCallback(ProgressCallback progressCallback) {
         this.progressCallback = progressCallback;
+    }
+
+    public static EventBus getBus(){
+        return bus;
+    }
+
+    public void stopCurrentEmulation() {
+        if(telnetFuture != null && !telnetFuture.isDone()){
+            telnetFuture.cancel(true);
+        }
+        getBus().post(new EmulationStoppedEvent());
+
     }
 }
