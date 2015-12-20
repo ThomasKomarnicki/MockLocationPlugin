@@ -8,6 +8,7 @@ import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
+import com.intellij.uiDesigner.core.GridLayoutManager;
 import model.event.EmulationStartedEvent;
 import model.event.EmulationStoppedEvent;
 import org.jetbrains.annotations.NotNull;
@@ -18,6 +19,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 /**
  * Created by Thomas on 12/18/2015.
@@ -31,14 +34,38 @@ public class MainToolWindow implements ToolWindowFactory, ProgressCallback {
     private JProgressBar progressBar;
 
     private StartEndEmulation startEndEmulationPanel;
+    private JPanel blankJpanel;
+    private JPanel emulationContentPanel;
 
     public MainToolWindow(){
+
+        blankJpanel = new JPanel(new GridLayoutManager(1,1)){
+            @Override
+            public String toString() {
+                return "Blank Panel";
+            }
+        };
+
+        mockingToolsComboBox.addItem(startEndEmulationPanel);
+        mockingToolsComboBox.addItem(blankJpanel);
+
+        mockingToolsComboBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if(e.getStateChange() == ItemEvent.SELECTED){
+                    emulationContentPanel.removeAll();
+                    mockingToolsComboBox.hidePopup();
+                    System.out.println("selected "+e.getItem());
+                    emulationContentPanel.add((Component) e.getItem());
+
+                }
+
+            }
+        });
 
         startEndEmulationPanel.setProgressCallback(this);
         progressBar.setMinimum(0);
         progressBar.setMaximum(100);
-
-        mockingToolsComboBox.addItem(startEndEmulationPanel);
     }
 
     @Override
