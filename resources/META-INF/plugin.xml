@@ -39,10 +39,7 @@
   </extensions>
 
   <actions>
-    <group id="com.doglandia.GpsEmulator" text="_Sample Menu" description="Sample menu">
-      <add-to-group group-id="MainMenu" anchor="last"  />
-      <!--<action id="Myplugin.Textboxes" class="action.GpsWindow" text="Gps Emulator" description="A gps emulator" />-->
-    </group>
+
   </actions>
 
 </idea-plugin>

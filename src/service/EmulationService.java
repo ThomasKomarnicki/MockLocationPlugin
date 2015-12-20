@@ -1,12 +1,15 @@
 package service;
 
 
+import com.intellij.openapi.application.Application;
+import com.intellij.openapi.application.ApplicationManager;
 import model.GpsPoint;
 import util.TelnetSession;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Future;
 
 /**
  * Created by Thomas on 12/19/2015.
@@ -17,6 +20,8 @@ public class EmulationService {
 
     private Thread telnetThread;
 
+    private ProgressCallback progressCallback;
+
     public void emulatePath(double startLat, double startLon, double endLat, double endLon, int timeInterval, int steps){
 
         double latDiff = startLat - endLat;
@@ -26,9 +31,10 @@ public class EmulationService {
         double lonStep = lonDiff / steps;
 
         List<GpsPoint> points = new ArrayList<>();
-        for(int i = 0; i < steps; i++){
-            points.add(new GpsPoint(startLat + (i*latStep), startLon +(i * lonStep)));
+        for(int i = 0; i < steps-1; i++){
+            points.add(new GpsPoint(startLat - (i*latStep), startLon -(i * lonStep)));
         }
+        points.add(new GpsPoint(endLat, endLon));
 
         startPointEmulation(points, timeInterval);
 
@@ -38,16 +44,27 @@ public class EmulationService {
         if(telnetThread != null){
             telnetThread.interrupt();
         }
-        telnetThread = new Thread(new Runnable() {
+
+        Future future = ApplicationManager.getApplication().executeOnPooledThread(new Runnable() {
             @Override
             public void run() {
                 long stepDuration = totalDuration/pathPoints.size();
                 telnetSession = new TelnetSession();
                 try {
                     telnetSession.startSession();
-                    for(GpsPoint gpsPoint : pathPoints){
+                    if(progressCallback != null){
+                        progressCallback.onProgressEvent(0);
+                    }
+                    for(int i = 0; i < pathPoints.size(); i++){
+                        GpsPoint gpsPoint = pathPoints.get(i);
                         telnetSession.sendGpsCoords(gpsPoint.getLat(), gpsPoint.getLon());
                         Thread.sleep(stepDuration);
+                        if(progressCallback != null){
+                            progressCallback.onProgressEvent(100*(i+1)/(pathPoints.size()));
+                        }
+                    }
+                    if(progressCallback != null){
+                        progressCallback.onProgressEvent(100);
                     }
                     telnetSession.endSession();
                 } catch (IOException e) {
@@ -58,9 +75,11 @@ public class EmulationService {
             }
 
         });
-        telnetThread.start();
+//        telnetThread.start();
 
     }
 
-
+    public void setProgressCallback(ProgressCallback progressCallback) {
+        this.progressCallback = progressCallback;
+    }
 }

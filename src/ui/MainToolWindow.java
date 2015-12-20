@@ -1,5 +1,6 @@
 package ui;
 
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
@@ -8,6 +9,7 @@ import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import org.jetbrains.annotations.NotNull;
 import service.EmulationService;
+import service.ProgressCallback;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -16,7 +18,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by Thomas on 12/18/2015.
  */
-public class MainToolWindow implements ToolWindowFactory {
+public class MainToolWindow implements ToolWindowFactory, ProgressCallback {
 
     private Project project;
     private ToolWindow mainToolWindow;
@@ -30,6 +32,7 @@ public class MainToolWindow implements ToolWindowFactory {
     private JTextField endLocationLat;
     private JTextField endLocationLon;
     private JButton startGPSEmulationButton;
+    private JProgressBar progressBar;
 
     public MainToolWindow(){
         startGPSEmulationButton.addActionListener(new ActionListener() {
@@ -46,12 +49,17 @@ public class MainToolWindow implements ToolWindowFactory {
                     int timeInterval = Integer.valueOf(timeIntervalField.getText());
 
                     EmulationService emulationService = ServiceManager.getService(EmulationService.class);
-                    emulationService.emulatePath(startLat, startLon, endLat, endLon, steps, steps * timeInterval * 1000);
+                    emulationService.setProgressCallback(MainToolWindow.this);
+                    emulationService.emulatePath(startLat, startLon, endLat, endLon, steps * timeInterval * 1000, steps);
+
                 } catch (NumberFormatException e){
                     e.printStackTrace();
                 }
             }
         });
+
+        progressBar.setMinimum(0);
+        progressBar.setMaximum(100);
     }
 
     @Override
@@ -63,4 +71,14 @@ public class MainToolWindow implements ToolWindowFactory {
         this.mainToolWindow.getContentManager().addContent(content);
     }
 
+    @Override
+    public void onProgressEvent(final int progress) {
+        ApplicationManager.getApplication().invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                progressBar.setValue(progress);
+            }
+        });
+
+    }
 }

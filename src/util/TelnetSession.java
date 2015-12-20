@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.ConnectException;
 import java.net.Socket;
 
 /**
@@ -27,7 +28,12 @@ public class TelnetSession {
     }
 
     public void startSession() throws IOException {
-        telnetSocket = new Socket("localhost", port);
+        try {
+            telnetSocket = new Socket("localhost", port);
+        }catch (ConnectException e){
+            // todo couldn't connect to emulator
+            e.printStackTrace();
+        }
 
         out = new PrintWriter(telnetSocket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(telnetSocket.getInputStream()));
