@@ -18,7 +18,7 @@ public class EmulationService {
 
     private TelnetSession telnetSession;
 
-    private Thread telnetThread;
+    private Future telnetFuture;
 
     private ProgressCallback progressCallback;
 
@@ -41,11 +41,11 @@ public class EmulationService {
     }
 
     private void startPointEmulation(final List<GpsPoint> pathPoints, final int totalDuration){
-        if(telnetThread != null){
-            telnetThread.interrupt();
+        if(telnetFuture != null && !telnetFuture.isDone()){
+            telnetFuture.cancel(true);
         }
 
-        Future future = ApplicationManager.getApplication().executeOnPooledThread(new Runnable() {
+        telnetFuture = ApplicationManager.getApplication().executeOnPooledThread(new Runnable() {
             @Override
             public void run() {
                 long stepDuration = totalDuration/pathPoints.size();
@@ -70,7 +70,7 @@ public class EmulationService {
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+//                    e.printStackTrace();
                 }
             }
 
