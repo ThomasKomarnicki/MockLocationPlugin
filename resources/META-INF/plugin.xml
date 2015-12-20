@@ -1,0 +1,48 @@
+<idea-plugin version="2">
+  <id>com.doglandia.GpsEmulator</id>
+  <name>Gps Emulator</name>
+  <version>1.0</version>
+  <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+
+  <description><![CDATA[
+      Enter short description for your plugin here.<br>
+      <em>most HTML tags may be used</em>
+    ]]></description>
+
+  <change-notes><![CDATA[
+      Add change notes here.<br>
+      <em>most HTML tags may be used</em>
+    ]]>
+  </change-notes>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+  <idea-version since-build="141.0"/>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+       on how to target different products -->
+  <!-- uncomment to enable plugin in all products
+  <depends>com.intellij.modules.lang</depends>
+  -->
+
+  <extensions defaultExtensionNs="com.intellij">
+    <!-- Add your extensions here -->
+          <!-- Add your extensions here -->
+          <toolWindow
+                  id="Gps Emulator"
+                  anchor="right"
+                  factoryClass="ui.MainToolWindow"
+                  secondary="true">
+          </toolWindow>
+
+      <applicationService serviceInterface="service.EmulationService" serviceImplementation="service.EmulationService" />
+
+  </extensions>
+
+  <actions>
+    <group id="com.doglandia.GpsEmulator" text="_Sample Menu" description="Sample menu">
+      <add-to-group group-id="MainMenu" anchor="last"  />
+      <!--<action id="Myplugin.Textboxes" class="action.GpsWindow" text="Gps Emulator" description="A gps emulator" />-->
+    </group>
+  </actions>
+
+</idea-plugin>
