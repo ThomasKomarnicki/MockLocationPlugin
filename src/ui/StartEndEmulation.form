@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="ui.MainToolWindow">
-  <grid id="27dc6" binding="toolWindowContent" layout-manager="GridLayoutManager" row-count="6" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="12" left="2" bottom="0" right="2"/>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="ui.StartEndEmulation">
+  <grid id="27dc6" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="542" height="686"/>
+      <xy x="20" y="20" width="500" height="400"/>
     </constraints>
     <properties/>
     <border type="none"/>
     <children>
-      <grid id="40ea5" binding="gpsPathPanel" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="4351" binding="gpsPathPanel" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="15" left="0" bottom="15" right="0"/>
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties>
-          <visible value="true"/>
-        </properties>
+        <properties/>
         <border type="none"/>
         <children>
-          <grid id="89073" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="81bd" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
@@ -26,7 +24,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="76e64" class="javax.swing.JLabel">
+              <component id="2e362" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -35,7 +33,7 @@
                   <text value="Start Location:"/>
                 </properties>
               </component>
-              <grid id="1ba04" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="25501" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -43,7 +41,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="f2b4e" class="javax.swing.JLabel">
+                  <component id="c09c8" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -51,7 +49,7 @@
                       <text value="Lat:"/>
                     </properties>
                   </component>
-                  <component id="d0beb" class="javax.swing.JTextField" binding="startLocationLat">
+                  <component id="e8b2e" class="javax.swing.JTextField" binding="startLocationLat">
                     <constraints>
                       <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -61,7 +59,7 @@
                       <toolTipText value=""/>
                     </properties>
                   </component>
-                  <component id="43e40" class="javax.swing.JLabel">
+                  <component id="d256e" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -69,7 +67,7 @@
                       <text value="Lon:"/>
                     </properties>
                   </component>
-                  <component id="3df58" class="javax.swing.JTextField" binding="startLocationLon">
+                  <component id="a473c" class="javax.swing.JTextField" binding="startLocationLon">
                     <constraints>
                       <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -81,7 +79,7 @@
               </grid>
             </children>
           </grid>
-          <grid id="f980c" layout-manager="GridLayoutManager" row-count="5" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="3c513" layout-manager="GridLayoutManager" row-count="5" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="12" bottom="0" right="0"/>
             <constraints>
               <grid row="0" column="1" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -89,7 +87,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="afbdf" class="javax.swing.JLabel">
+              <component id="64c5f" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -97,7 +95,7 @@
                   <text value="Steps:"/>
                 </properties>
               </component>
-              <component id="edd38" class="javax.swing.JLabel">
+              <component id="a7751" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -105,7 +103,7 @@
                   <text value="Time Between Steps:"/>
                 </properties>
               </component>
-              <grid id="6cb20" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="465dc" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -113,7 +111,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="2684" class="javax.swing.JButton" binding="startGPSEmulationButton" default-binding="true">
+                  <component id="6b2ad" class="javax.swing.JButton" binding="startGPSEmulationButton" default-binding="true">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
                         <preferred-size width="50" height="-1"/>
@@ -125,7 +123,7 @@
                   </component>
                 </children>
               </grid>
-              <component id="feb0f" class="javax.swing.JTextField" binding="stepsTextField">
+              <component id="e475" class="javax.swing.JTextField" binding="stepsTextField">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
@@ -135,7 +133,7 @@
                   <text value="10"/>
                 </properties>
               </component>
-              <component id="7c7a2" class="javax.swing.JTextField" binding="timeIntervalField">
+              <component id="2fa31" class="javax.swing.JTextField" binding="timeIntervalField">
                 <constraints>
                   <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
@@ -147,7 +145,7 @@
               </component>
             </children>
           </grid>
-          <grid id="dda5" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="1dbc1" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
@@ -155,7 +153,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="71658" class="javax.swing.JLabel">
+              <component id="37005" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -164,7 +162,7 @@
                   <text value="End Location"/>
                 </properties>
               </component>
-              <grid id="f23ad" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="511dc" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -172,7 +170,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="b8e5f" class="javax.swing.JLabel">
+                  <component id="5fbe" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -180,7 +178,7 @@
                       <text value="Lat:"/>
                     </properties>
                   </component>
-                  <component id="b3636" class="javax.swing.JTextField" binding="endLocationLat">
+                  <component id="c921" class="javax.swing.JTextField" binding="endLocationLat">
                     <constraints>
                       <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -188,7 +186,7 @@
                     </constraints>
                     <properties/>
                   </component>
-                  <component id="814d6" class="javax.swing.JLabel">
+                  <component id="716c" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -196,7 +194,7 @@
                       <text value="Lon:"/>
                     </properties>
                   </component>
-                  <component id="54177" class="javax.swing.JTextField" binding="endLocationLon">
+                  <component id="44252" class="javax.swing.JTextField" binding="endLocationLon">
                     <constraints>
                       <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -210,59 +208,6 @@
           </grid>
         </children>
       </grid>
-      <component id="c92cc" class="javax.swing.JProgressBar" binding="progressBar">
-        <constraints>
-          <grid row="3" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
-            <preferred-size width="200" height="-1"/>
-          </grid>
-        </constraints>
-        <properties/>
-      </component>
-      <component id="7106" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Progress:"/>
-        </properties>
-      </component>
-      <component id="54e73" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <alignmentX value="1.0"/>
-          <text value="Mocking Tools:"/>
-        </properties>
-      </component>
-      <component id="f051e" class="javax.swing.JComboBox" binding="mockingToolsComboBox">
-        <constraints>
-          <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <model/>
-        </properties>
-      </component>
-      <vspacer id="65d3f">
-        <constraints>
-          <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-        </constraints>
-      </vspacer>
-      <component id="3724f" class="javax.swing.JLabel" binding="errorLabel">
-        <constraints>
-          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <foreground color="-8059136"/>
-          <text value="ErrorLabel"/>
-          <visible value="false"/>
-        </properties>
-      </component>
-      <nested-form id="fa3af" form-file="ui/StartEndEmulation.form">
-        <constraints>
-          <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-        </constraints>
-      </nested-form>
     </children>
   </grid>
 </form>
