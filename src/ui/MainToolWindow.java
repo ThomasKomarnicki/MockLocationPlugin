@@ -26,13 +26,14 @@ public class MainToolWindow implements ToolWindowFactory, ProgressCallback {
     private JPanel gpsPathPanel;
     private JTextField startLocationLat;
     private JTextField startLocationLon;
-    private JComboBox actionComboBox;
+    private JComboBox mockingToolsComboBox;
     private JTextField stepsTextField;
     private JTextField timeIntervalField;
     private JTextField endLocationLat;
     private JTextField endLocationLon;
     private JButton startGPSEmulationButton;
     private JProgressBar progressBar;
+    private JLabel errorLabel;
 
     public MainToolWindow(){
         startGPSEmulationButton.addActionListener(new ActionListener() {
