@@ -34,20 +34,13 @@ public class MainToolWindow implements ToolWindowFactory, ProgressCallback {
     private JProgressBar progressBar;
 
     private StartEndEmulation startEndEmulationPanel;
-    private JPanel blankJpanel;
     private JPanel emulationContentPanel;
 
     public MainToolWindow(){
 
-        blankJpanel = new JPanel(new GridLayoutManager(1,1)){
-            @Override
-            public String toString() {
-                return "Blank Panel";
-            }
-        };
+
 
         mockingToolsComboBox.addItem(startEndEmulationPanel);
-        mockingToolsComboBox.addItem(blankJpanel);
 
         mockingToolsComboBox.addItemListener(new ItemListener() {
             @Override
