@@ -8,6 +8,7 @@ import model.event.EmulationStoppedEvent;
 import org.apache.commons.lang.math.NumberUtils;
 import service.EmulationService;
 import service.ProgressCallback;
+import util.CardName;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -16,7 +17,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by Thomas on 12/20/2015.
  */
-public class StartEndEmulation extends JPanel{
+public class StartEndEmulation extends JPanel implements CardName{
 
     private JPanel gpsPathPanel;
     private JTextField startLocationLat;
@@ -193,5 +194,10 @@ public class StartEndEmulation extends JPanel{
             }
         });
 
+    }
+
+    @Override
+    public String getCardName() {
+        return "startEndEmulation";
     }
 }

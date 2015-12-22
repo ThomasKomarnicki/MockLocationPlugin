@@ -14,6 +14,7 @@ import model.event.EmulationStoppedEvent;
 import org.jetbrains.annotations.NotNull;
 import service.EmulationService;
 import service.ProgressCallback;
+import util.CardName;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,13 +35,17 @@ public class MainToolWindow implements ToolWindowFactory, ProgressCallback {
     private JProgressBar progressBar;
 
     private StartEndEmulation startEndEmulationPanel;
+    private PointListEmulation pointListEmulation;
+
     private JPanel emulationContentPanel;
+    private CardLayout cardLayout;
 
     public MainToolWindow(){
 
-
+        cardLayout = (CardLayout)(emulationContentPanel.getLayout());
 
         mockingToolsComboBox.addItem(startEndEmulationPanel);
+        mockingToolsComboBox.addItem(pointListEmulation);
 
         mockingToolsComboBox.addItemListener(new ItemListener() {
             @Override
@@ -49,8 +54,8 @@ public class MainToolWindow implements ToolWindowFactory, ProgressCallback {
                     emulationContentPanel.removeAll();
                     mockingToolsComboBox.hidePopup();
                     System.out.println("selected "+e.getItem());
-                    emulationContentPanel.add((Component) e.getItem());
-
+                    cardLayout.next(emulationContentPanel);
+//                    cardLayout.show(emulationContentPanel, ((CardName)e.getItem()).getCardName());
                 }
 
             }
