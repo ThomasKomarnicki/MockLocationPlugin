@@ -10,6 +10,5 @@ public class PointListEmulation extends JPanel {
     private JTextField startLocationLat;
     private JTextField startLocationLon;
     private JButton startGPSEmulationButton;
-    private JTextField stepsTextField;
     private JTextField timeIntervalField;
 }

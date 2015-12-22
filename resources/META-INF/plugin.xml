@@ -31,7 +31,8 @@
                   id="Gps Emulator"
                   anchor="right"
                   factoryClass="ui.MainToolWindow"
-                  secondary="true">
+                  secondary="true"
+                  icon="/icons/gps_icon.png">
           </toolWindow>
 
       <applicationService serviceInterface="service.EmulationService" serviceImplementation="service.EmulationService" />
