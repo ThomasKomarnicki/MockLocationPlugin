@@ -44,6 +44,7 @@ public class MainToolWindow implements ToolWindowFactory, ProgressCallback {
 
         cardLayout = (CardLayout)(emulationContentPanel.getLayout());
 
+
         mockingToolsComboBox.addItem(startEndEmulationPanel);
         mockingToolsComboBox.addItem(pointListEmulation);
 
@@ -51,11 +52,9 @@ public class MainToolWindow implements ToolWindowFactory, ProgressCallback {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if(e.getStateChange() == ItemEvent.SELECTED){
-                    emulationContentPanel.removeAll();
                     mockingToolsComboBox.hidePopup();
                     System.out.println("selected "+e.getItem());
-                    cardLayout.next(emulationContentPanel);
-//                    cardLayout.show(emulationContentPanel, ((CardName)e.getItem()).getCardName());
+                    cardLayout.show(emulationContentPanel, ((CardName)e.getItem()).getCardName());
                 }
 
             }

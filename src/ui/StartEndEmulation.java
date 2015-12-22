@@ -198,6 +198,6 @@ public class StartEndEmulation extends JPanel implements CardName{
 
     @Override
     public String getCardName() {
-        return "startEndEmulation";
+        return "startEndEmulationPanel";
     }
 }
