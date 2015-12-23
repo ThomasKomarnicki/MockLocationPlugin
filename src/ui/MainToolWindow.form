@@ -75,7 +75,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <nested-form id="cd8cd" form-file="ui/StartEndEmulation.form" binding="startEndEmulationPanel">
+          <nested-form id="cd8cd" form-file="ui/StartEndEmulationPanel.form" binding="startEndEmulationPanel">
             <constraints>
               <card name="startEndEmulationPanel"/>
             </constraints>

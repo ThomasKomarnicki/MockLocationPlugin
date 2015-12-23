@@ -27,6 +27,8 @@ public class EmulationService {
 
     private ProgressCallback progressCallback;
 
+
+
     public void emulatePath(double startLat, double startLon, double endLat, double endLon, int timeInterval, int steps){
 
         double latDiff = startLat - endLat;
@@ -99,6 +101,9 @@ public class EmulationService {
             telnetFuture.cancel(true);
         }
         getBus().post(new EmulationStoppedEvent());
+    }
 
+    public boolean isRunning(){
+        return telnetFuture != null && !telnetFuture.isDone() && !telnetFuture.isCancelled();
     }
 }
