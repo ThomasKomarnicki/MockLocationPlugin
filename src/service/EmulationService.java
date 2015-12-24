@@ -6,7 +6,7 @@ import com.intellij.openapi.application.ApplicationManager;
 import model.GpsEmulationModel;
 import model.GpsPoint;
 import model.event.EmulationStoppedEvent;
-import util.TelnetSession;
+import util.AndroidConsoleSession;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,7 +19,7 @@ public class EmulationService {
 
     private static EventBus bus = new EventBus();
 
-    private TelnetSession telnetSession;
+    private AndroidConsoleSession androidConsoleSession;
 
     private Future telnetFuture;
 
@@ -35,16 +35,16 @@ public class EmulationService {
         telnetFuture = ApplicationManager.getApplication().executeOnPooledThread(new Runnable() {
             @Override
             public void run() {
-                long stepDuration = gpsEmulationModel.getTotalDuration()/pathPoints.size();
-                telnetSession = new TelnetSession();
+                long stepDuration = (gpsEmulationModel.getTotalDuration()*1000)/pathPoints.size();
+                androidConsoleSession = new AndroidConsoleSession();
                 try {
-                    telnetSession.startSession();
+                    androidConsoleSession.startSession();
                     if(progressCallback != null){
                         progressCallback.onProgressEvent(0);
                     }
                     for(int i = 0; i < pathPoints.size(); i++){
                         GpsPoint gpsPoint = pathPoints.get(i);
-                        telnetSession.sendGpsCoords(gpsPoint.getLat(), gpsPoint.getLon());
+                        androidConsoleSession.sendGpsCoords(gpsPoint.getLat(), gpsPoint.getLon());
                         Thread.sleep(stepDuration);
                         if(progressCallback != null){
                             progressCallback.onProgressEvent(100*(i+1)/(pathPoints.size()));
@@ -53,7 +53,7 @@ public class EmulationService {
                     if(progressCallback != null){
                         progressCallback.onProgressEvent(100);
                     }
-                    telnetSession.endSession();
+                    androidConsoleSession.endSession();
                     getBus().post(new EmulationStoppedEvent());
                 } catch (IOException e) {
                     e.printStackTrace();

@@ -1,18 +1,13 @@
 package ui;
 
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.components.ServiceManager;
 import dataValidation.ValidationResult;
 import model.GpsEmulationModel;
 import model.GpsPoint;
-import presenter.Presenter;
-import service.EmulationService;
+import presenter.PanelPresenter;
 import util.CardName;
 import dataValidation.DataValidator;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +19,7 @@ public class StartEndEmulationPanel extends JPanel implements CardName, Emulatio
     private JPanel gpsPathPanel;
     private JTextField startLocationLat;
     private JTextField startLocationLon;
-    private JButton startGPSEmulationButton;
+//    private JButton startGPSEmulationButton;
     private JTextField stepsTextField;
     private JTextField timeIntervalField;
     private JTextField endLocationLat;
@@ -32,25 +27,17 @@ public class StartEndEmulationPanel extends JPanel implements CardName, Emulatio
     private JPanel startEndRootJpanel;
     private JLabel errorText;
 
-    private Presenter presenter;
+    private PanelPresenter panelPresenter;
 
     private DataValidator dataValidator;
 
     public StartEndEmulationPanel(){
 
         dataValidator = new DataValidator();
-
-        startGPSEmulationButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                presenter.onEmulationButtonClick();
-            }
-        });
     }
 
-    @Override
-    public void setPresenter(Presenter presenter) {
-        this.presenter = presenter;
+    public void setPanelPresenter(PanelPresenter panelPresenter) {
+        this.panelPresenter = panelPresenter;
     }
 
 
@@ -63,26 +50,6 @@ public class StartEndEmulationPanel extends JPanel implements CardName, Emulatio
     @Override
     public String toString() {
         return "Straight Line GPS Emulator";
-    }
-
-    @Override
-    public void onGpsEmulationStopped() {
-        ApplicationManager.getApplication().invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                startGPSEmulationButton.setText("Start GPS Emulation");
-            }
-        });
-    }
-
-    @Override
-    public void onGpsEmulationStarted() {
-        ApplicationManager.getApplication().invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                startGPSEmulationButton.setText("Stop GPS Emulation");
-            }
-        });
     }
 
     @Override
@@ -109,7 +76,7 @@ public class StartEndEmulationPanel extends JPanel implements CardName, Emulatio
         }
         points.add(new GpsPoint(endLat, endLon));
 
-        GpsEmulationModel gpsEmulationModel = new GpsEmulationModel(points, timeInterval);
+        GpsEmulationModel gpsEmulationModel = new GpsEmulationModel(points, timeInterval * steps);
 
         return gpsEmulationModel;
     }

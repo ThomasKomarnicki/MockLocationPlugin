@@ -2,19 +2,24 @@ package presenter;
 
 import com.intellij.openapi.components.ServiceManager;
 import model.GpsEmulationModel;
+import model.event.EmulationStartedEvent;
+import model.event.EmulationStoppedEvent;
 import service.EmulationService;
 import service.ProgressCallback;
 import ui.EmulationPanel;
+import ui.MainToolWindow;
 
 /**
  * Created by Thomas on 12/22/2015.
  */
-public class Presenter implements ProgressCallback{
+public class PanelPresenter implements ProgressCallback{
 
     private EmulationPanel currentEmulationPanel;
     private EmulationService emulationService;
+    private MainToolWindow mainToolWindow;
 
-    public Presenter(){
+    public PanelPresenter(MainToolWindow mainToolWindow){
+        this.mainToolWindow = mainToolWindow;
         EmulationService.getBus().register(this);
         emulationService = ServiceManager.getService(EmulationService.class);
         emulationService.setProgressCallback(this);
@@ -31,12 +36,12 @@ public class Presenter implements ProgressCallback{
     public void onEmulationButtonClick(){
         if(emulationRunning()){
             emulationService.stopCurrentEmulation();
-            currentEmulationPanel.onGpsEmulationStopped();
+            mainToolWindow.onGpsEmulationStopped(new EmulationStoppedEvent());
         }else{
             if(currentEmulationPanel.validateData()){
                 GpsEmulationModel gpsEmulationModel = currentEmulationPanel.createGpsEmulationData();
                 emulationService.startEmulation(gpsEmulationModel);
-                currentEmulationPanel.onGpsEmulationStarted();
+                mainToolWindow.onGpsEmulationStarted(new EmulationStartedEvent());
 
             }
 

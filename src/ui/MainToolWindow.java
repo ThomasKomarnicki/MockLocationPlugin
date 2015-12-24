@@ -10,12 +10,14 @@ import com.intellij.ui.content.ContentFactory;
 import model.event.EmulationStartedEvent;
 import model.event.EmulationStoppedEvent;
 import org.jetbrains.annotations.NotNull;
-import presenter.Presenter;
+import presenter.PanelPresenter;
 import service.ProgressCallback;
 import util.CardName;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -34,18 +36,25 @@ public class MainToolWindow implements ToolWindowFactory, ProgressCallback {
     private PointListEmulation pointListEmulation;
 
     private JPanel emulationContentPanel;
+    private JButton emulationActionButton;
     private CardLayout cardLayout;
 
-    private Presenter presenter;
+    private PanelPresenter panelPresenter;
 
     public MainToolWindow(){
 
         cardLayout = (CardLayout)(emulationContentPanel.getLayout());
 
-        presenter = new Presenter();
+        panelPresenter = new PanelPresenter(this);
 
         mockingToolsComboBox.addItem(startEndEmulationPanel);
         mockingToolsComboBox.addItem(pointListEmulation);
+
+
+        startEndEmulationPanel.setPanelPresenter(panelPresenter);
+        panelPresenter.setCurrentEmulationPanel(startEndEmulationPanel);
+        progressBar.setMinimum(0);
+        progressBar.setMaximum(100);
 
         mockingToolsComboBox.addItemListener(new ItemListener() {
             @Override
@@ -54,18 +63,20 @@ public class MainToolWindow implements ToolWindowFactory, ProgressCallback {
                     EmulationPanel emulationPanel = (EmulationPanel) e.getItem();
                     mockingToolsComboBox.hidePopup();
 //                    System.out.println("selected "+e.getItem());
-                    presenter.setCurrentEmulationPanel(emulationPanel);
-                    emulationPanel.setPresenter(presenter);
+                    panelPresenter.setCurrentEmulationPanel(emulationPanel);
+                    emulationPanel.setPanelPresenter(panelPresenter);
                     cardLayout.show(emulationContentPanel, ((CardName)e.getItem()).getCardName());
                 }
 
             }
         });
 
-        startEndEmulationPanel.setPresenter(presenter);
-        presenter.setCurrentEmulationPanel(startEndEmulationPanel);
-        progressBar.setMinimum(0);
-        progressBar.setMaximum(100);
+        emulationActionButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panelPresenter.onEmulationButtonClick();
+            }
+        });
     }
 
     @Override
@@ -93,6 +104,7 @@ public class MainToolWindow implements ToolWindowFactory, ProgressCallback {
         ApplicationManager.getApplication().invokeLater(new Runnable() {
             @Override
             public void run() {
+                emulationActionButton.setText("Start GPS Emulation");
                 progressBar.setValue(0);
             }
         });
@@ -104,7 +116,7 @@ public class MainToolWindow implements ToolWindowFactory, ProgressCallback {
         ApplicationManager.getApplication().invokeLater(new Runnable() {
             @Override
             public void run() {
-
+                emulationActionButton.setText("Stop GPS Emulation");
             }
         });
 

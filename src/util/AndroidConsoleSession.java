@@ -10,7 +10,7 @@ import java.net.Socket;
 /**
  * Created by Thomas on 12/19/2015.
  */
-public class TelnetSession {
+public class AndroidConsoleSession {
 
     private int port;
 
@@ -19,11 +19,11 @@ public class TelnetSession {
     private PrintWriter out;
     private BufferedReader in;
 
-    public TelnetSession(int port) {
+    public AndroidConsoleSession(int port) {
         this.port = port;
     }
 
-    public TelnetSession() {
+    public AndroidConsoleSession() {
         this(5554);
     }
 
