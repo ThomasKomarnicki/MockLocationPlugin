@@ -48,6 +48,7 @@ public class StartEndEmulationPanel extends JPanel implements CardName, Emulatio
         });
     }
 
+    @Override
     public void setPresenter(Presenter presenter) {
         this.presenter = presenter;
     }

@@ -2,6 +2,7 @@ package ui;
 
 import model.GpsEmulationModel;
 import model.GpsPoint;
+import presenter.Presenter;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface EmulationPanel {
     GpsEmulationModel createGpsEmulationData();
 
     boolean validateData();
+
+    void setPresenter(Presenter presenter);
 }

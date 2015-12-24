@@ -1,6 +1,5 @@
 package presenter;
 
-import com.google.common.eventbus.Subscribe;
 import com.intellij.openapi.components.ServiceManager;
 import model.GpsEmulationModel;
 import service.EmulationService;
