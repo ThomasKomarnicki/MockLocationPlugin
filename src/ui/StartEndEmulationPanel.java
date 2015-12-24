@@ -2,14 +2,19 @@ package ui;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ServiceManager;
-import controller.ViewController;
+import dataValidation.ValidationResult;
+import model.GpsEmulationModel;
+import model.GpsPoint;
+import presenter.Presenter;
 import service.EmulationService;
 import util.CardName;
-import util.DataValidator;
+import dataValidation.DataValidator;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Thomas on 12/20/2015.
@@ -27,11 +32,7 @@ public class StartEndEmulationPanel extends JPanel implements CardName, Emulatio
     private JPanel startEndRootJpanel;
     private JLabel errorText;
 
-//    private ProgressCallback progressCallback;
-
-//    private boolean emulationRunning = false;
-
-    private ViewController viewController;
+    private Presenter presenter;
 
     private DataValidator dataValidator;
 
@@ -42,54 +43,15 @@ public class StartEndEmulationPanel extends JPanel implements CardName, Emulatio
         startGPSEmulationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                EmulationService emulationService = ServiceManager.getService(EmulationService.class);
-                if (viewController.emulationRunning()) {
-                    emulationService.stopCurrentEmulation();
-                } else {
-                    errorText.setText("");
-                    if(validateInput()) {
-                        double startLat = Double.valueOf(startLocationLat.getText());
-
-                        double startLon = Double.valueOf(startLocationLon.getText());
-
-                        double endLat = Double.valueOf(endLocationLat.getText());
-                        double endLon = Double.valueOf(endLocationLon.getText());
-
-                        int steps = Integer.valueOf(stepsTextField.getText());
-                        int timeInterval = Integer.valueOf(timeIntervalField.getText());
-
-
-                        emulationService.setProgressCallback(progressCallback);
-                        emulationService.emulatePath(startLat, startLon, endLat, endLon, steps * timeInterval * 1000, steps);
-                    }
-
-                }
+                presenter.onEmulationButtonClick();
             }
         });
     }
 
-    public void setViewController(ViewController viewController) {
-        this.viewController = viewController;
+    public void setPresenter(Presenter presenter) {
+        this.presenter = presenter;
     }
 
-
-
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
-    }
-
-//    @Subscribe
-//    public void onGpsEmulationStopped(EmulationStoppedEvent emulationStoppedEvent){
-//
-//
-//    }
-//
-//    @Subscribe
-//    public void onGpsEmulationStarted(EmulationStartedEvent emulationStartedEvent){
-//
-//
-//    }
 
     @Override
     public String getCardName() {
@@ -120,5 +82,53 @@ public class StartEndEmulationPanel extends JPanel implements CardName, Emulatio
                 startGPSEmulationButton.setText("Stop GPS Emulation");
             }
         });
+    }
+
+    @Override
+    public GpsEmulationModel createGpsEmulationData() {
+        double startLat = Double.valueOf(startLocationLat.getText());
+
+        double startLon = Double.valueOf(startLocationLon.getText());
+
+        double endLat = Double.valueOf(endLocationLat.getText());
+        double endLon = Double.valueOf(endLocationLon.getText());
+
+        int steps = Integer.valueOf(stepsTextField.getText());
+        int timeInterval = Integer.valueOf(timeIntervalField.getText());
+
+        double latDiff = startLat - endLat;
+        double lonDiff = startLon - endLon;
+
+        double latStep = latDiff / steps;
+        double lonStep = lonDiff / steps;
+
+        List<GpsPoint> points = new ArrayList<>();
+        for(int i = 0; i < steps-1; i++){
+            points.add(new GpsPoint(startLat - (i*latStep), startLon -(i * lonStep)));
+        }
+        points.add(new GpsPoint(endLat, endLon));
+
+        GpsEmulationModel gpsEmulationModel = new GpsEmulationModel(points, timeInterval);
+
+        return gpsEmulationModel;
+    }
+
+    @Override
+    public boolean validateData() {
+        errorText.setText("");
+        dataValidator.startValidation();
+        dataValidator.validateLat(startLocationLat.getText(),"Start Latitude");
+        dataValidator.validateLon(startLocationLon.getText(), "Start Longitude");
+        dataValidator.validateLat(endLocationLat.getText(), "End Latitude");
+        dataValidator.validateLon(endLocationLon.getText(), "End Longitude");
+        dataValidator.validateInt(stepsTextField.getText(), "Steps");
+        dataValidator.validateInt(timeIntervalField.getText(), "Time Interval");
+        ValidationResult validationResult = dataValidator.getResult();
+        if(validationResult.isValid()) {
+            return true;
+        }else{
+            errorText.setText("<html>"+validationResult.getErrorsText()+"</html>");
+            return false;
+        }
     }
 }

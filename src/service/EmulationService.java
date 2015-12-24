@@ -2,15 +2,13 @@ package service;
 
 
 import com.google.common.eventbus.EventBus;
-import com.intellij.openapi.application.Application;
 import com.intellij.openapi.application.ApplicationManager;
+import model.GpsEmulationModel;
 import model.GpsPoint;
-import model.event.EmulationStartedEvent;
 import model.event.EmulationStoppedEvent;
 import util.TelnetSession;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Future;
 
@@ -27,28 +25,9 @@ public class EmulationService {
 
     private ProgressCallback progressCallback;
 
+    public void startEmulation(final GpsEmulationModel gpsEmulationModel){
+        final List<GpsPoint> pathPoints = gpsEmulationModel.getPoints();
 
-
-    public void emulatePath(double startLat, double startLon, double endLat, double endLon, int timeInterval, int steps){
-
-        double latDiff = startLat - endLat;
-        double lonDiff = startLon - endLon;
-
-        double latStep = latDiff / steps;
-        double lonStep = lonDiff / steps;
-
-        List<GpsPoint> points = new ArrayList<>();
-        for(int i = 0; i < steps-1; i++){
-            points.add(new GpsPoint(startLat - (i*latStep), startLon -(i * lonStep)));
-        }
-        points.add(new GpsPoint(endLat, endLon));
-
-        startPointEmulation(points, timeInterval);
-        getBus().post(new EmulationStartedEvent());
-
-    }
-
-    private void startPointEmulation(final List<GpsPoint> pathPoints, final int totalDuration){
         if(telnetFuture != null && !telnetFuture.isDone()){
             telnetFuture.cancel(true);
         }
@@ -56,7 +35,7 @@ public class EmulationService {
         telnetFuture = ApplicationManager.getApplication().executeOnPooledThread(new Runnable() {
             @Override
             public void run() {
-                long stepDuration = totalDuration/pathPoints.size();
+                long stepDuration = gpsEmulationModel.getTotalDuration()/pathPoints.size();
                 telnetSession = new TelnetSession();
                 try {
                     telnetSession.startSession();
@@ -84,9 +63,8 @@ public class EmulationService {
             }
 
         });
-//        telnetThread.start();
-
     }
+
 
     public void setProgressCallback(ProgressCallback progressCallback) {
         this.progressCallback = progressCallback;

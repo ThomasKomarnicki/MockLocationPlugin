@@ -10,6 +10,7 @@ import com.intellij.ui.content.ContentFactory;
 import model.event.EmulationStartedEvent;
 import model.event.EmulationStoppedEvent;
 import org.jetbrains.annotations.NotNull;
+import presenter.Presenter;
 import service.ProgressCallback;
 import util.CardName;
 
@@ -35,10 +36,13 @@ public class MainToolWindow implements ToolWindowFactory, ProgressCallback {
     private JPanel emulationContentPanel;
     private CardLayout cardLayout;
 
+    private Presenter presenter;
+
     public MainToolWindow(){
 
         cardLayout = (CardLayout)(emulationContentPanel.getLayout());
 
+        presenter = new Presenter();
 
         mockingToolsComboBox.addItem(startEndEmulationPanel);
         mockingToolsComboBox.addItem(pointListEmulation);
@@ -55,7 +59,7 @@ public class MainToolWindow implements ToolWindowFactory, ProgressCallback {
             }
         });
 
-        startEndEmulationPanel.setProgressCallback(this);
+        startEndEmulationPanel.setPresenter(presenter);
         progressBar.setMinimum(0);
         progressBar.setMaximum(100);
     }

@@ -1,5 +1,10 @@
 package ui;
 
+import model.GpsEmulationModel;
+import model.GpsPoint;
+
+import java.util.List;
+
 /**
  * Created by Thomas on 12/22/2015.
  */
@@ -9,4 +14,8 @@ public interface EmulationPanel {
 
     void onGpsEmulationStopped();
     void onGpsEmulationStarted();
+
+    GpsEmulationModel createGpsEmulationData();
+
+    boolean validateData();
 }
