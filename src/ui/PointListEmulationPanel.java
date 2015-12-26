@@ -1,7 +1,9 @@
 package ui;
 
 import com.intellij.openapi.ui.VerticalFlowLayout;
+import dataValidation.DataValidator;
 import model.GpsEmulationModel;
+import model.GpsPoint;
 import presenter.PanelPresenter;
 import ui.pointListView.PointListView;
 import util.CardName;
@@ -23,34 +25,31 @@ public class PointListEmulationPanel extends JPanel implements CardName, Emulati
 
     private PanelPresenter panelPresenter;
 
-    private List<PointListView> pointListViews = new ArrayList<>();
+    private List<PointListView> pointListViews;
+
+    private DataValidator dataValidator;
 
 
     public PointListEmulationPanel(){
         super();
+        dataValidator = new DataValidator();
+        pointListViews = new ArrayList<>();
         addPointListComponents();
     }
 
     private void addPointListComponents(){
-//        setLayout(new VerticalFlowLayout());
         pointListPanel.setLayout(new VerticalFlowLayout());
         for(int i = 0; i < 5; i++){
 
             PointListView pointListView = new PointListView();
-//            pointListView.setPreferredSize(new Dimension(-1,50));
             pointListPanel.add( pointListView);
-//            pointListPanel.add( new JButton("Please "+i));
             pointListView.setVisible(true);
             pointListViews.add(pointListView);
         }
 
-        pointListPanel.revalidate();
-        pointListPanel.repaint();
-        pointListPanel.updateUI();
         revalidate();
         updateUI();
         System.out.println("added 5 items to pointListPanel");
-//        pointListPanel.invalidate();
     }
 
     @Override
@@ -65,11 +64,22 @@ public class PointListEmulationPanel extends JPanel implements CardName, Emulati
 
     @Override
     public GpsEmulationModel createGpsEmulationData() {
-        return null;
+        List<GpsPoint> gpsPoints = new ArrayList<>();
+        for(PointListView pointListView : pointListViews){
+            gpsPoints.add(pointListView.getResolvedGpsPoint());
+        }
+        return new GpsEmulationModel(gpsPoints, Integer.valueOf(timeIntervalField.getText()));
     }
 
     @Override
     public boolean validateData() {
+        dataValidator.startValidation();
+        dataValidator.validateInt(timeIntervalField.getText(), "Time Interval");
+        for(PointListView pointListView : pointListViews){
+            if(pointListView.validData(dataValidator)){
+
+            }
+        }
         return true;
     }
 

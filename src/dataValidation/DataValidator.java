@@ -109,7 +109,7 @@ public class DataValidator {
      * @param latName
      * @return error string if the entered latitude is not valid
      */
-    private String validateLatString(String lat, String latName){
+    public static String validateLatString(String lat, String latName){
         if(NumberUtils.isNumber(lat)){
             double startLat = Double.valueOf(lat);
             if(startLat < -90 || startLat > 90){
@@ -127,7 +127,7 @@ public class DataValidator {
      * @param lonName
      * @return error string is enerted longitude is not valid
      */
-    private String validateLonString(String lon, String lonName){
+    public static String validateLonString(String lon, String lonName){
         if(NumberUtils.isNumber(lon)){
             double startLat = Double.valueOf(lon);
             if(startLat < -90 || startLat > 90){
@@ -139,7 +139,7 @@ public class DataValidator {
         return null;
     }
 
-    private String validateIntString(String intString, String intName){
+    public static String validateIntString(String intString, String intName){
         try{
             Integer.valueOf(intString);
         } catch (Exception e){
