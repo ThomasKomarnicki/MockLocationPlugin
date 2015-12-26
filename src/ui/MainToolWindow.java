@@ -33,7 +33,7 @@ public class MainToolWindow implements ToolWindowFactory, ProgressCallback {
     private JProgressBar progressBar;
 
     private StartEndEmulationPanel startEndEmulationPanel;
-    private PointListEmulation pointListEmulation;
+    private PointListEmulationPanel pointListEmulationPanel;
 
     private JPanel emulationContentPanel;
     private JButton emulationActionButton;
@@ -48,7 +48,7 @@ public class MainToolWindow implements ToolWindowFactory, ProgressCallback {
         panelPresenter = new PanelPresenter(this);
 
         mockingToolsComboBox.addItem(startEndEmulationPanel);
-        mockingToolsComboBox.addItem(pointListEmulation);
+        mockingToolsComboBox.addItem(pointListEmulationPanel);
 
 
         startEndEmulationPanel.setPanelPresenter(panelPresenter);
@@ -77,6 +77,8 @@ public class MainToolWindow implements ToolWindowFactory, ProgressCallback {
                 panelPresenter.onEmulationButtonClick();
             }
         });
+        emulationContentPanel.revalidate();
+        emulationContentPanel.updateUI();
     }
 
     @Override
