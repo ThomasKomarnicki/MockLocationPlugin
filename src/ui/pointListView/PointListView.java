@@ -63,25 +63,19 @@ public class PointListView extends JPanel {
 
     }
 
-    public boolean validateData(DataValidator dataValidator){
+    public boolean validateData(){
 
-        boolean currentlyValid = dataValidator.isCurrentlyValid();
+//        boolean currentlyValid = dataValidator.isCurrentlyValid();
         String errorString = DataValidator.validateLatString(latTextField.getText(), "");
         if(errorString != null){
             latTextField.setForeground(errorColor);
-            if(currentlyValid){ // was valid before the last check
-                dataValidator.addErrorMessage("There are errors in the location fields.");
-            }
             return false;
         }
 
-        currentlyValid = dataValidator.isCurrentlyValid();
+//        currentlyValid = dataValidator.isCurrentlyValid();
         errorString = DataValidator.validateLonString(lonTextField.getText(), "");
         if(errorString != null){
             lonTextField.setForeground(errorColor);
-            if(currentlyValid){ // was valid before the last check
-                dataValidator.addErrorMessage("There are errors in the location fields.");
-            }
             return false;
         }
 

@@ -42,14 +42,16 @@ public class EmulationService {
                     if(progressCallback != null){
                         progressCallback.onProgressEvent(0);
                     }
-                    for(int i = 0; i < pathPoints.size(); i++){
-                        GpsPoint gpsPoint = pathPoints.get(i);
-                        androidConsoleSession.sendGpsCoords(gpsPoint.getLat(), gpsPoint.getLon());
-                        Thread.sleep(stepDuration);
-                        if(progressCallback != null){
-                            progressCallback.onProgressEvent(100*(i+1)/(pathPoints.size()));
+                    do {
+                        for (int i = 0; i < pathPoints.size(); i++) {
+                            GpsPoint gpsPoint = pathPoints.get(i);
+                            androidConsoleSession.sendGpsCoords(gpsPoint.getLat(), gpsPoint.getLon());
+                            Thread.sleep(stepDuration);
+                            if (progressCallback != null) {
+                                progressCallback.onProgressEvent(100 * (i + 1) / (pathPoints.size()));
+                            }
                         }
-                    }
+                    }while(gpsEmulationModel.loop());
                     if(progressCallback != null){
                         progressCallback.onProgressEvent(100);
                     }

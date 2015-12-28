@@ -70,28 +70,43 @@ public class PointListEmulationPanel extends JPanel implements CardName, Emulati
         for(PointListView pointListView : pointListViews){
             gpsPoints.add(pointListView.getResolvedGpsPoint());
         }
-        return new GpsEmulationModel(gpsPoints, Integer.valueOf(timeIntervalField.getText()));
+        if(reverseCheckBox.isSelected()){
+            gpsPoints = getReversedList(gpsPoints);
+        }
+        return new GpsEmulationModel(gpsPoints, Integer.valueOf(timeIntervalField.getText())*gpsPoints.size(),loopCheckBox.isSelected());
+    }
+
+    private static List<GpsPoint> getReversedList(List<GpsPoint> points){
+        List<GpsPoint> reversed = new ArrayList<>();
+        for(int i = points.size()-1; i >=0; i++){
+            reversed.add(points.get(i));
+        }
+        return reversed;
     }
 
     @Override
     public boolean validateData() {
-//        boolean valid = true;
+        boolean valid = true;
         dataValidator.startValidation();
         dataValidator.validateInt(timeIntervalField.getText(), "Time Interval");
+
         for(PointListView pointListView : pointListViews){
-            if(!pointListView.validateData(dataValidator)){
-//                valid = false;
+            if(!pointListView.validateData()){
+                valid = false;
             }
         }
 
-        ValidationResult validationResult = dataValidator.getResult();
-        if(!validationResult.isValid()) {
-            errorText.setText(validationResult.getErrorsText());
-            return false;
+        if(!valid) {
+            String errorTextString = "There are errors in the location fields, All points must be valid doubles";
+            ValidationResult validationResult = dataValidator.getResult();
+            if(!validationResult.isValid()){
+                errorTextString += validationResult.getErrorsText();
+            }
+            errorText.setText("<html>"+errorTextString+"</html>");
         }else {
             errorText.setText("");
-            return true;
         }
+        return valid;
     }
 
     public void setPanelPresenter(PanelPresenter panelPresenter) {

@@ -9,10 +9,18 @@ public class GpsEmulationModel {
 
     private List<GpsPoint> points;
     private int totalDuration; // in seconds
+    private boolean loop;
 
     public GpsEmulationModel(List<GpsPoint> points, int totalDuration) {
         this.points = points;
         this.totalDuration = totalDuration;
+        this.loop = false;
+    }
+
+    public GpsEmulationModel(List<GpsPoint> points, int totalDuration, boolean loop) {
+        this.points = points;
+        this.totalDuration = totalDuration;
+        this.loop = loop;
     }
 
     public List<GpsPoint> getPoints() {
@@ -21,5 +29,9 @@ public class GpsEmulationModel {
 
     public int getTotalDuration() {
         return totalDuration;
+    }
+
+    public boolean loop() {
+        return loop;
     }
 }
