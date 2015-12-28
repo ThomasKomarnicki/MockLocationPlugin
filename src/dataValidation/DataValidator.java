@@ -49,59 +49,17 @@ public class DataValidator {
         return this;
     }
 
+    public boolean isCurrentlyValid(){
+        return valid;
+    }
+
+    public void addErrorMessage(String errorMessage){
+        errorsText.append("<br>"+errorMessage);
+    }
+
     public ValidationResult getResult(){
         return new ValidationResult(valid, errorsText.toString());
     }
-
-//    private boolean validateInput(){
-//        String errors = "";
-//        boolean valid = true;
-//
-//        String validateStartingLatResult = validateLat(startLocationLat.getText(), "Start Latitude");
-//        if(validateStartingLatResult != null){
-//            valid = false;
-//            errors += validateStartingLatResult;
-//        }
-//
-//        String validateStartingLonResult = validateLon(startLocationLon.getText(), "Start Longitude");
-//        if(validateStartingLonResult != null){
-//            valid = false;
-//            errors += validateStartingLonResult;
-//        }
-//
-//        String validateEndLatResult = validateLat(endLocationLat.getText(), "End Latitude");
-//        if(validateEndLatResult != null){
-//            valid = false;
-//            errors += validateEndLatResult;
-//        }
-//
-//        String validateEndLonResult = validateLon(endLocationLon.getText(), "End Longitude");
-//        if(validateEndLonResult != null){
-//            valid = false;
-//            errors += validateEndLonResult;
-//        }
-//
-//        try{
-//            Integer.valueOf(stepsTextField.getText());
-//        } catch (Exception e){
-//            valid = false;
-//            errors += "Steps must be a valid Integer<br>";
-//        }
-//
-//        try{
-//            Integer.valueOf(timeIntervalField.getText());
-//        } catch (Exception e){
-//            valid = false;
-//            errors += "Time Interval must be a valid Integer<br>";
-//        }
-//
-//        if(!valid){
-//            errorText.setText("<html>"+errors+"</html>");
-//
-//        }
-//
-//        return valid;
-//    }
 
     /**
      *

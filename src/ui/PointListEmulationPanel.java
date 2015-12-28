@@ -2,6 +2,7 @@ package ui;
 
 import com.intellij.openapi.ui.VerticalFlowLayout;
 import dataValidation.DataValidator;
+import dataValidation.ValidationResult;
 import model.GpsEmulationModel;
 import model.GpsPoint;
 import presenter.PanelPresenter;
@@ -22,6 +23,7 @@ public class PointListEmulationPanel extends JPanel implements CardName, Emulati
     private JCheckBox loopCheckBox;
     private JCheckBox reverseCheckBox;
     private JPanel pointListPanel;
+    private JLabel errorText;
 
     private PanelPresenter panelPresenter;
 
@@ -73,14 +75,23 @@ public class PointListEmulationPanel extends JPanel implements CardName, Emulati
 
     @Override
     public boolean validateData() {
+//        boolean valid = true;
         dataValidator.startValidation();
         dataValidator.validateInt(timeIntervalField.getText(), "Time Interval");
         for(PointListView pointListView : pointListViews){
-            if(pointListView.validData(dataValidator)){
-
+            if(!pointListView.validateData(dataValidator)){
+//                valid = false;
             }
         }
-        return true;
+
+        ValidationResult validationResult = dataValidator.getResult();
+        if(!validationResult.isValid()) {
+            errorText.setText(validationResult.getErrorsText());
+            return false;
+        }else {
+            errorText.setText("");
+            return true;
+        }
     }
 
     public void setPanelPresenter(PanelPresenter panelPresenter) {
