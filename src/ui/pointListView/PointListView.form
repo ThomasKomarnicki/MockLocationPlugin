@@ -62,29 +62,20 @@
       </grid>
       <component id="a4858" class="javax.swing.JSeparator">
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="-1" height="5"/>
           </grid>
         </constraints>
         <properties/>
       </component>
-      <component id="ac04f" class="javax.swing.JButton" binding="removeButton">
+      <component id="60a60" class="javax.swing.JButton" binding="button1" default-binding="true">
         <constraints>
-          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="20" height="-1"/>
+          </grid>
         </constraints>
         <properties>
-          <background color="-15472640"/>
-          <borderPainted value="false"/>
-          <contentAreaFilled value="false"/>
-          <defaultCapable value="false"/>
-          <enabled value="true"/>
-          <focusPainted value="true"/>
-          <focusable value="true"/>
-          <hideActionText value="true"/>
-          <icon value="icons/gps_icon.png"/>
-          <opaque value="false"/>
-          <requestFocusEnabled value="true"/>
-          <rolloverEnabled value="true"/>
+          <icon value="icons/remove.png"/>
           <text value=""/>
         </properties>
       </component>

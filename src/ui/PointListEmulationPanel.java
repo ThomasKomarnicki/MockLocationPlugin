@@ -10,6 +10,8 @@ import ui.pointListView.PointListView;
 import util.CardName;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +26,8 @@ public class PointListEmulationPanel extends JPanel implements CardName, Emulati
     private JCheckBox reverseCheckBox;
     private JPanel pointListPanel;
     private JLabel errorText;
+    private JButton addRowButton;
+    private JButton deleteRowButton;
 
     private PanelPresenter panelPresenter;
 
@@ -37,21 +41,49 @@ public class PointListEmulationPanel extends JPanel implements CardName, Emulati
         dataValidator = new DataValidator();
         pointListViews = new ArrayList<>();
         addPointListComponents();
+
+        addRowButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addRow();
+
+                revalidate();
+                updateUI();
+            }
+        });
+        deleteRowButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deleteRow();
+
+                revalidate();
+                updateUI();
+            }
+        });
     }
 
     private void addPointListComponents(){
         pointListPanel.setLayout(new VerticalFlowLayout());
         for(int i = 0; i < 5; i++){
-
-            PointListView pointListView = new PointListView();
-            pointListPanel.add( pointListView);
-            pointListView.setVisible(true);
-            pointListViews.add(pointListView);
+            addRow();
         }
 
         revalidate();
         updateUI();
         System.out.println("added 5 items to pointListPanel");
+    }
+
+    private void addRow(){
+        PointListView pointListView = new PointListView();
+        pointListPanel.add( pointListView);
+        pointListView.setVisible(true);
+        pointListViews.add(pointListView);
+    }
+
+    private void deleteRow(){
+        int lastRow = pointListViews.size()-1;
+        pointListPanel.remove(lastRow);
+        pointListViews.remove(lastRow);
     }
 
     @Override
@@ -76,14 +108,6 @@ public class PointListEmulationPanel extends JPanel implements CardName, Emulati
         return new GpsEmulationModel(gpsPoints, Integer.valueOf(timeIntervalField.getText())*gpsPoints.size(),loopCheckBox.isSelected());
     }
 
-    private static List<GpsPoint> getReversedList(List<GpsPoint> points){
-        List<GpsPoint> reversed = new ArrayList<>();
-        for(int i = points.size()-1; i >=0; i++){
-            reversed.add(points.get(i));
-        }
-        return reversed;
-    }
-
     @Override
     public boolean validateData() {
         boolean valid = true;
@@ -96,20 +120,32 @@ public class PointListEmulationPanel extends JPanel implements CardName, Emulati
             }
         }
 
-        if(!valid) {
-            String errorTextString = "There are errors in the location fields, All points must be valid doubles";
-            ValidationResult validationResult = dataValidator.getResult();
+        ValidationResult validationResult = dataValidator.getResult();
+        if(!valid || !validationResult.isValid()) {
+            String errorTextString = "";
+            if(!valid) {
+                errorTextString = "There are errors in the location fields, All points must be valid doubles";
+            }
             if(!validationResult.isValid()){
                 errorTextString += validationResult.getErrorsText();
             }
             errorText.setText("<html>"+errorTextString+"</html>");
+            return false;
         }else {
             errorText.setText("");
+            return true;
         }
-        return valid;
     }
 
     public void setPanelPresenter(PanelPresenter panelPresenter) {
         this.panelPresenter = panelPresenter;
+    }
+
+    private static List<GpsPoint> getReversedList(List<GpsPoint> points){
+        List<GpsPoint> reversed = new ArrayList<>();
+        for(int i = points.size()-1; i >=0; i--){
+            reversed.add(points.get(i));
+        }
+        return reversed;
     }
 }

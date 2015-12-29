@@ -53,6 +53,6 @@ public class PanelPresenter implements ProgressCallback{
 
     @Override
     public void onProgressEvent(int progress) {
-
+        mainToolWindow.onProgressEvent(progress);
     }
 }

@@ -1,7 +1,9 @@
 package ui.pointListView;
 
+import com.intellij.ui.roots.IconActionComponent;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.sun.java.swing.plaf.motif.MotifDesktopIconUI;
 import dataValidation.DataValidator;
 import model.GpsPoint;
 
@@ -20,8 +22,8 @@ public class PointListView extends JPanel {
 
     private JTextField latTextField;
     private JTextField lonTextField;
-    private JButton removeButton;
     private JPanel pointListRoot;
+    private JButton button1;
 
     public PointListView(){
         super(new GridLayoutManager(1,1));
