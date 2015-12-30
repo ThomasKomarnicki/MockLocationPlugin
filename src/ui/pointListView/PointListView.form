@@ -68,7 +68,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="60a60" class="javax.swing.JButton" binding="button1" default-binding="true">
+      <component id="60a60" class="javax.swing.JButton" binding="deleteRowButton">
         <constraints>
           <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
             <preferred-size width="20" height="-1"/>

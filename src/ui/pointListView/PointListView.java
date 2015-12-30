@@ -1,16 +1,17 @@
 package ui.pointListView;
 
-import com.intellij.ui.roots.IconActionComponent;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
-import com.sun.java.swing.plaf.motif.MotifDesktopIconUI;
 import dataValidation.DataValidator;
 import model.GpsPoint;
+import ui.PointListEmulationPanel;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by Thomas on 12/24/2015.
@@ -23,10 +24,13 @@ public class PointListView extends JPanel {
     private JTextField latTextField;
     private JTextField lonTextField;
     private JPanel pointListRoot;
-    private JButton button1;
+    private JButton deleteRowButton;
 
-    public PointListView(){
+    private PointListEmulationPanel pointListEmulationPanel;
+
+    public PointListView(final PointListEmulationPanel pointListEmulationPanel){
         super(new GridLayoutManager(1,1));
+        this.pointListEmulationPanel = pointListEmulationPanel;
         add(pointListRoot, new GridConstraints());
 
         latTextField.getDocument().addDocumentListener(new DocumentListener() {
@@ -63,6 +67,13 @@ public class PointListView extends JPanel {
             }
         });
 
+        deleteRowButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pointListEmulationPanel.removeRow(PointListView.this);
+            }
+        });
+
     }
 
     public boolean validateData(){
@@ -96,5 +107,13 @@ public class PointListView extends JPanel {
 
     public GpsPoint getResolvedGpsPoint(){
         return new GpsPoint(getLat(), getLon());
+    }
+
+    public JTextField getLatTextField() {
+        return latTextField;
+    }
+
+    public JTextField getLonTextField() {
+        return lonTextField;
     }
 }
