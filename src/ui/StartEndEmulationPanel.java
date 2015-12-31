@@ -1,6 +1,6 @@
 package ui;
 
-import com.intellij.openapi.components.PersistentStateComponent;
+import com.intellij.openapi.components.*;
 import dataValidation.ValidationResult;
 import model.GpsEmulationModel;
 import model.GpsPoint;
@@ -16,6 +16,10 @@ import java.util.List;
 /**
  * Created by Thomas on 12/20/2015.
  */
+@State(
+        name = "StartEndPersistence",
+        storages = @Storage(id = "other", file = StoragePathMacros.APP_CONFIG+"/start_end.xml")
+)
 public class StartEndEmulationPanel extends JPanel implements CardName, EmulationPanel, PersistentStateComponent<StartEndEmulationPanel.State> {
 
     private JPanel gpsPathPanel;
@@ -105,6 +109,7 @@ public class StartEndEmulationPanel extends JPanel implements CardName, Emulatio
     @Nullable
     @Override
     public State getState() {
+        System.out.println("saved state");
         State state = new State();
         state.startLat = startLocationLat.getText();
         state.startLon = startLocationLon.getText();
@@ -117,6 +122,7 @@ public class StartEndEmulationPanel extends JPanel implements CardName, Emulatio
 
     @Override
     public void loadState(State state) {
+        System.out.println("loaded state");
         startLocationLat.setText(state.startLat);
         startLocationLon.setText(state.startLon);
         endLocationLat.setText(state.endLat);
@@ -126,13 +132,18 @@ public class StartEndEmulationPanel extends JPanel implements CardName, Emulatio
         timeIntervalField.setText(state.timeBetweenSteps);
     }
 
-    class State{
-        String startLat;
-        String startLon;
-        String endLat;
-        String endLon;
+    public class State{
 
-        String steps;
-        String timeBetweenSteps;
+        public State(){
+
+        }
+
+        public String startLat;
+        public String startLon;
+        public String endLat;
+        public String endLon;
+
+        public String steps;
+        public String timeBetweenSteps;
     }
 }

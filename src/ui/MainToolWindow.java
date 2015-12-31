@@ -138,4 +138,9 @@ public class MainToolWindow implements ToolWindowFactory, ProgressCallback {
         return -1;
     }
 
+    public class State{
+        public String port;
+        public int selectedPanel;
+    }
+
 }

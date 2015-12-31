@@ -1,6 +1,6 @@
 package ui;
 
-import com.intellij.openapi.components.PersistentStateComponent;
+import com.intellij.openapi.components.*;
 import com.intellij.openapi.ui.VerticalFlowLayout;
 import dataValidation.DataValidator;
 import dataValidation.ValidationResult;
@@ -20,6 +20,10 @@ import java.util.List;
 /**
  * Created by Thomas on 12/20/2015.
  */
+@State(
+        name = "PointListPersistence",
+        storages = @Storage(id = "other", file = StoragePathMacros.APP_CONFIG+"/point_list.xml")
+)
 public class PointListEmulationPanel extends JPanel implements CardName, EmulationPanel, PersistentStateComponent<PointListEmulationPanel.State> {
 
     private JTextField timeIntervalField;
@@ -203,29 +207,32 @@ public class PointListEmulationPanel extends JPanel implements CardName, Emulati
         }
     }
 
-    class State{
 
-        List<String> latStrings;
-        List<String> lonStrings;
-        boolean loop;
-        boolean reverse;
-        String timeInterval;
+    public class State{
+
+
+
+        public List<String> latStrings;
+        public List<String> lonStrings;
+        public boolean loop;
+        public boolean reverse;
+        public String timeInterval;
 
         State(){
             latStrings = new ArrayList<>();
             lonStrings = new ArrayList<>();
         }
 
-        void addRow(String lat, String lon){
+        public void addRow(String lat, String lon){
             latStrings.add(lat);
             lonStrings.add(lon);
         }
 
-        int getRowCount(){
+        public int getRowCount(){
             return Math.max(latStrings.size(), lonStrings.size());
         }
 
-        String getLatStringAt(int index){
+        public String getLatStringAt(int index){
             if(latStrings.size() >= index){
                 return "";
             }else{
@@ -233,7 +240,7 @@ public class PointListEmulationPanel extends JPanel implements CardName, Emulati
             }
         }
 
-        String getLonStringAt(int index){
+        public String getLonStringAt(int index){
             if(lonStrings.size() >= index){
                 return "";
             }else{

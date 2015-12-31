@@ -36,6 +36,7 @@
           </toolWindow>
 
       <applicationService serviceInterface="service.EmulationService" serviceImplementation="service.EmulationService" />
+    <applicationService serviceInterface="service.SettingsService" serviceImplementation="service.SettingsService"/>
 
   </extensions>
 
