@@ -41,8 +41,11 @@ public class PanelPresenter implements ProgressCallback{
             if(currentEmulationPanel.validateData()){
                 GpsEmulationModel gpsEmulationModel = currentEmulationPanel.createGpsEmulationData();
                 if(gpsEmulationModel != null) {
-                    emulationService.startEmulation(gpsEmulationModel);
-                    mainToolWindow.onGpsEmulationStarted(new EmulationStartedEvent());
+                    int port = mainToolWindow.getPort();
+                    if(port > 0) {
+                        emulationService.startEmulation(gpsEmulationModel, port);
+                        mainToolWindow.onGpsEmulationStarted(new EmulationStartedEvent());
+                    }
                 }
 
             }

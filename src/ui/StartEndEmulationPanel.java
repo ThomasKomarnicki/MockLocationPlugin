@@ -1,8 +1,10 @@
 package ui;
 
+import com.intellij.openapi.components.PersistentStateComponent;
 import dataValidation.ValidationResult;
 import model.GpsEmulationModel;
 import model.GpsPoint;
+import org.jetbrains.annotations.Nullable;
 import presenter.PanelPresenter;
 import util.CardName;
 import dataValidation.DataValidator;
@@ -14,7 +16,7 @@ import java.util.List;
 /**
  * Created by Thomas on 12/20/2015.
  */
-public class StartEndEmulationPanel extends JPanel implements CardName, EmulationPanel{
+public class StartEndEmulationPanel extends JPanel implements CardName, EmulationPanel, PersistentStateComponent<StartEndEmulationPanel.State> {
 
     private JPanel gpsPathPanel;
     private JTextField startLocationLat;
@@ -98,5 +100,39 @@ public class StartEndEmulationPanel extends JPanel implements CardName, Emulatio
             errorText.setText("<html>"+validationResult.getErrorsText()+"</html>");
             return false;
         }
+    }
+
+    @Nullable
+    @Override
+    public State getState() {
+        State state = new State();
+        state.startLat = startLocationLat.getText();
+        state.startLon = startLocationLon.getText();
+        state.endLat = endLocationLat.getText();
+        state.endLon = endLocationLon.getText();
+        state.steps = stepsTextField.getText();
+        state.timeBetweenSteps = timeIntervalField.getText();
+        return state;
+    }
+
+    @Override
+    public void loadState(State state) {
+        startLocationLat.setText(state.startLat);
+        startLocationLon.setText(state.startLon);
+        endLocationLat.setText(state.endLat);
+        endLocationLon.setText(state.endLon);
+
+        stepsTextField.setText(state.steps);
+        timeIntervalField.setText(state.timeBetweenSteps);
+    }
+
+    class State{
+        String startLat;
+        String startLon;
+        String endLat;
+        String endLon;
+
+        String steps;
+        String timeBetweenSteps;
     }
 }

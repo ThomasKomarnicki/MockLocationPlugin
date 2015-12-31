@@ -37,6 +37,7 @@ public class MainToolWindow implements ToolWindowFactory, ProgressCallback {
 
     private JPanel emulationContentPanel;
     private JButton emulationActionButton;
+    private JTextField portTextField;
     private CardLayout cardLayout;
 
     private PanelPresenter panelPresenter;
@@ -122,6 +123,19 @@ public class MainToolWindow implements ToolWindowFactory, ProgressCallback {
             }
         });
 
+    }
+
+    public int getPort(){
+        String portText = portTextField.getText();
+
+        try {
+            int port = Integer.valueOf(portText);
+            return port;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return -1;
     }
 
 }

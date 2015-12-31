@@ -25,7 +25,7 @@ public class EmulationService {
 
     private ProgressCallback progressCallback;
 
-    public void startEmulation(final GpsEmulationModel gpsEmulationModel){
+    public void startEmulation(final GpsEmulationModel gpsEmulationModel, final int port){
         final List<GpsPoint> pathPoints = gpsEmulationModel.getPoints();
 
         if(telnetFuture != null && !telnetFuture.isDone()){
@@ -36,7 +36,7 @@ public class EmulationService {
             @Override
             public void run() {
                 long stepDuration = (gpsEmulationModel.getTotalDuration()*1000)/pathPoints.size();
-                androidConsoleSession = new AndroidConsoleSession();
+                androidConsoleSession = new AndroidConsoleSession(port);
                 try {
                     androidConsoleSession.startSession();
                     if(progressCallback != null){
