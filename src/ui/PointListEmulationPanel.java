@@ -6,6 +6,8 @@ import dataValidation.DataValidator;
 import dataValidation.ValidationResult;
 import model.GpsEmulationModel;
 import model.GpsPoint;
+import model.PersistableState;
+import org.jdom.Element;
 import org.jetbrains.annotations.Nullable;
 import presenter.PanelPresenter;
 import ui.pointListView.PointListView;
@@ -208,9 +210,14 @@ public class PointListEmulationPanel extends JPanel implements CardName, Emulati
     }
 
 
-    public class State{
+    public static class State implements PersistableState{
 
-
+        private static final String POINT_LIST_PANEL_TAG = "PointListPanel";
+        private static final String LOOP = "loop";
+        private static final String REVERSE = "reverse";
+        private static final String POINT_LIST_TAG = "pointList";
+        private static final String POINT_TAG = "point";
+        private static final String TIME_INTERVAL = "timeInterval";
 
         public List<String> latStrings;
         public List<String> lonStrings;
@@ -218,7 +225,7 @@ public class PointListEmulationPanel extends JPanel implements CardName, Emulati
         public boolean reverse;
         public String timeInterval;
 
-        State(){
+        public State(){
             latStrings = new ArrayList<>();
             lonStrings = new ArrayList<>();
         }
@@ -245,6 +252,40 @@ public class PointListEmulationPanel extends JPanel implements CardName, Emulati
                 return "";
             }else{
                 return lonStrings.get(index);
+            }
+        }
+
+        @Override
+        public Element save() {
+            Element pointListElement = new Element(POINT_LIST_PANEL_TAG);
+            pointListElement.setAttribute(TIME_INTERVAL, timeInterval);
+            pointListElement.setAttribute(LOOP, String.valueOf(loop));
+            pointListElement.setAttribute(REVERSE, String.valueOf(reverse));
+
+            Element pointsListElement = new Element(POINT_LIST_TAG);
+            for(int i = 0; i < getRowCount(); i++){
+                Element pointElement = new Element(POINT_TAG);
+                pointElement.setAttribute("lat", getLatStringAt(i));
+                pointElement.setAttribute("lon", getLonStringAt(i));
+                pointListElement.addContent(pointElement);
+            }
+
+            pointListElement.addContent(pointsListElement);
+
+            return pointListElement;
+        }
+
+        @Override
+        public void restore(Element element) {
+
+            timeInterval = element.getAttributeValue(TIME_INTERVAL);
+            loop = Boolean.valueOf(element.getAttributeValue(LOOP));
+            reverse = Boolean.valueOf(element.getAttributeValue(REVERSE));
+
+            Element pointsListElement = element.getChild(POINT_LIST_TAG);
+            List<Element> children = pointsListElement.getChildren();
+            for(Element child : children){
+                addRow(child.getAttributeValue("lat"), child.getAttributeValue("lon"));
             }
         }
     }

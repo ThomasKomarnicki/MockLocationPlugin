@@ -4,6 +4,8 @@ import com.intellij.openapi.components.*;
 import dataValidation.ValidationResult;
 import model.GpsEmulationModel;
 import model.GpsPoint;
+import model.PersistableState;
+import org.jdom.Element;
 import org.jetbrains.annotations.Nullable;
 import presenter.PanelPresenter;
 import util.CardName;
@@ -132,8 +134,15 @@ public class StartEndEmulationPanel extends JPanel implements CardName, Emulatio
         timeIntervalField.setText(state.timeBetweenSteps);
     }
 
-    public class State{
+    public static class State implements PersistableState{
 
+        private static final String START_END_PANEL_TAG = "StartEndPanel";
+        private static final String START_LAT = "startLat";
+        private static final String START_LON = "startLon";
+        private static final String END_LAT = "endLat";
+        private static final String END_LON = "endLon";
+        private static final String STEPS = "steps";
+        private static final String TIME_INTERVAL = "timeInterval";
         public State(){
 
         }
@@ -145,5 +154,28 @@ public class StartEndEmulationPanel extends JPanel implements CardName, Emulatio
 
         public String steps;
         public String timeBetweenSteps;
+
+        @Override
+        public Element save() {
+            Element startEndElement = new Element(START_END_PANEL_TAG);
+            startEndElement.setAttribute(START_LAT, startLat);
+            startEndElement.setAttribute(START_LON, startLon);
+            startEndElement.setAttribute(END_LAT, endLat);
+            startEndElement.setAttribute(END_LON, endLon);
+            startEndElement.setAttribute(STEPS, steps);
+            startEndElement.setAttribute(TIME_INTERVAL, timeBetweenSteps);
+
+            return startEndElement;
+        }
+
+        @Override
+        public void restore(Element element) {
+            startLat = element.getAttributeValue(START_LAT);
+            startLon = element.getAttributeValue(START_LON);
+            endLat = element.getAttributeValue(END_LAT);
+            endLon = element.getAttributeValue(END_LON);
+            steps = element.getAttributeValue(STEPS);
+            timeBetweenSteps = element.getAttributeValue(TIME_INTERVAL);
+        }
     }
 }
