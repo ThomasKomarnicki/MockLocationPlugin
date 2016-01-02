@@ -195,6 +195,10 @@ public class MainToolWindow implements ToolWindowFactory, ProgressCallback, Pers
         return State.TOOL_WINDOW_TAG;
     }
 
+    public SinglePointEmulationPanel getSinglePointEmulationPanel() {
+        return singlePointEmulationPanel;
+    }
+
 
     public static class State implements PersistableState{
         private static final String TOOL_WINDOW_TAG = "MainToolWindow";

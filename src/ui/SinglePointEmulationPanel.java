@@ -92,6 +92,10 @@ public class SinglePointEmulationPanel extends JPanel implements CardName, Emula
         public String latString;
         public String lonString;
 
+        public State(){
+
+        }
+
         public State(String latString, String lonString){
             this.latString = latString;
             this.lonString = lonString;

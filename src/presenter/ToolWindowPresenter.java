@@ -6,6 +6,7 @@ import org.jdom.Element;
 import service.SettingsService;
 import ui.MainToolWindow;
 import ui.PointListEmulationPanel;
+import ui.SinglePointEmulationPanel;
 import ui.StartEndEmulationPanel;
 
 import java.util.ArrayList;
@@ -50,5 +51,9 @@ public class ToolWindowPresenter {
         PointListEmulationPanel.State state2 = new PointListEmulationPanel.State();
         state2.restore(rootElement.getChild(mainToolWindow.getPointListEmulationPanel().getElementName()));
         mainToolWindow.getPointListEmulationPanel().restoreState(state2);
+
+        SinglePointEmulationPanel.State state3 = new SinglePointEmulationPanel.State();
+        state3.restore(rootElement.getChild(mainToolWindow.getPointListEmulationPanel().getElementName()));
+        mainToolWindow.getSinglePointEmulationPanel().restoreState(state3);
     }
 }
