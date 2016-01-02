@@ -121,6 +121,11 @@
               <card name="pointListEmulation"/>
             </constraints>
           </nested-form>
+          <nested-form id="a6a7f" form-file="ui/SinglePointEmulationPanel.form" binding="singlePointEmulationPanel">
+            <constraints>
+              <card name="singlePointEmulation"/>
+            </constraints>
+          </nested-form>
         </children>
       </grid>
     </children>

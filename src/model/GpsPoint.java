@@ -1,5 +1,7 @@
 package model;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Created by Thomas on 12/19/2015.
  */
@@ -11,6 +13,10 @@ public class GpsPoint {
     public GpsPoint(double lat, double lon){
         this.lat = lat;
         this.lon = lon;
+    }
+
+    public GpsPoint(@NotNull  String lat, @NotNull String lon) {
+        this(Double.valueOf(lat.trim()),Double.valueOf(lon.trim()));
     }
 
     public double getLat() {

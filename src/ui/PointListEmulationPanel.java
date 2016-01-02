@@ -101,7 +101,7 @@ public class PointListEmulationPanel extends JPanel implements CardName, Emulati
 
     @Override
     public String toString() {
-        return "Point List Emulation";
+        return "List of Gps Points";
     }
 
     @Override

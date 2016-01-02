@@ -54,7 +54,7 @@ public class StartEndEmulationPanel extends JPanel implements CardName, Emulatio
 
     @Override
     public String toString() {
-        return "Straight Line GPS Emulator";
+        return "Start and End Points";
     }
 
     @Override

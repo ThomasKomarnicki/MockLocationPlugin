@@ -1,6 +1,7 @@
 package dataValidation;
 
 import org.apache.commons.lang.math.NumberUtils;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by Thomas on 12/22/2015.
@@ -22,8 +23,8 @@ public class DataValidator {
         return this;
     }
 
-    public DataValidator validateLat(String lat, String latName){
-        String error = validateLatString(lat, latName);
+    public DataValidator validateLat(@NotNull String lat, String latName){
+        String error = validateLatString(lat.trim(), latName);
         if(error != null){
             valid = false;
             errorsText.append("<br>" + error);
@@ -31,8 +32,8 @@ public class DataValidator {
         return this;
     }
 
-    public DataValidator validateLon(String lon, String lonName){
-        String error = validateLonString(lon, lonName);
+    public DataValidator validateLon(@NotNull String lon, String lonName){
+        String error = validateLonString(lon.trim(), lonName);
         if(error != null){
             valid = false;
             errorsText.append("<br>" + error);

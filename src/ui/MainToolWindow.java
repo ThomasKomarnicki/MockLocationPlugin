@@ -40,6 +40,7 @@ public class MainToolWindow implements ToolWindowFactory, ProgressCallback, Pers
 
     private StartEndEmulationPanel startEndEmulationPanel;
     private PointListEmulationPanel pointListEmulationPanel;
+    private SinglePointEmulationPanel singlePointEmulationPanel;
 
     private JPanel emulationContentPanel;
     private JButton emulationActionButton;
@@ -60,6 +61,7 @@ public class MainToolWindow implements ToolWindowFactory, ProgressCallback, Pers
 
         mockingToolsComboBox.addItem(startEndEmulationPanel);
         mockingToolsComboBox.addItem(pointListEmulationPanel);
+        mockingToolsComboBox.addItem(singlePointEmulationPanel);
 
 
         startEndEmulationPanel.setPanelPresenter(panelPresenter);
