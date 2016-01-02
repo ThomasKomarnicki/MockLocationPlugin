@@ -2,8 +2,11 @@ package presenter;
 
 import com.intellij.openapi.components.ServiceManager;
 import model.PersistableState;
+import org.jdom.Element;
 import service.SettingsService;
 import ui.MainToolWindow;
+import ui.PointListEmulationPanel;
+import ui.StartEndEmulationPanel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,5 +36,19 @@ public class ToolWindowPresenter {
         persistableStates.add(mainToolWindow.getPointListEmulationPanel().getState());
 
         return persistableStates;
+    }
+
+    public void loadPersistableStates(Element rootElement){
+        MainToolWindow.State state = new MainToolWindow.State();
+        state.restore(rootElement.getChild(mainToolWindow.getElementName()));
+        mainToolWindow.restoreState(state);
+
+        StartEndEmulationPanel.State state1 = new StartEndEmulationPanel.State();
+        state1.restore(rootElement.getChild(mainToolWindow.getStartEndEmulationPanel().getElementName()));
+        mainToolWindow.getStartEndEmulationPanel().restoreState(state1);
+
+        PointListEmulationPanel.State state2 = new PointListEmulationPanel.State();
+        state2.restore(rootElement.getChild(mainToolWindow.getPointListEmulationPanel().getElementName()));
+        mainToolWindow.getPointListEmulationPanel().restoreState(state2);
     }
 }

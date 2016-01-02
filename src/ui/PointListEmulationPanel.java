@@ -1,12 +1,12 @@
 package ui;
 
-import com.intellij.openapi.components.*;
 import com.intellij.openapi.ui.VerticalFlowLayout;
 import dataValidation.DataValidator;
 import dataValidation.ValidationResult;
 import model.GpsEmulationModel;
 import model.GpsPoint;
 import model.PersistableState;
+import model.PersistableUiElement;
 import org.jdom.Element;
 import org.jetbrains.annotations.Nullable;
 import presenter.PanelPresenter;
@@ -22,11 +22,8 @@ import java.util.List;
 /**
  * Created by Thomas on 12/20/2015.
  */
-@State(
-        name = "PointListPersistence",
-        storages = @Storage(id = "other", file = StoragePathMacros.APP_CONFIG+"/point_list.xml")
-)
-public class PointListEmulationPanel extends JPanel implements CardName, EmulationPanel, PersistentStateComponent<PointListEmulationPanel.State> {
+
+public class PointListEmulationPanel extends JPanel implements CardName, EmulationPanel, PersistableUiElement<PointListEmulationPanel.State> {
 
     private JTextField timeIntervalField;
     private JPanel pointListContent;
@@ -75,14 +72,16 @@ public class PointListEmulationPanel extends JPanel implements CardName, Emulati
     }
 
     private void addPointListComponents(){
-        pointListPanel.setLayout(new VerticalFlowLayout());
-        for(int i = 0; i < 5; i++){
-            addRow();
-        }
+        if(pointListViews.size() == 0) {
+            pointListPanel.setLayout(new VerticalFlowLayout());
+            for (int i = 0; i < 5; i++) {
+                addRow();
+            }
 
-        revalidate();
-        updateUI();
-        System.out.println("added 5 items to pointListPanel");
+            revalidate();
+            updateUI();
+            System.out.println("added 5 items to pointListPanel");
+        }
     }
 
     private void addRow(){
@@ -180,17 +179,26 @@ public class PointListEmulationPanel extends JPanel implements CardName, Emulati
     }
 
     @Override
-    public void loadState(State state) {
+    public void restoreState(State state) {
         loopCheckBox.setSelected(state.loop);
         reverseCheckBox.setSelected(state.reverse);
         timeIntervalField.setText(state.timeInterval);
 
+        pointListPanel.removeAll();
+        pointListViews.clear();
         for(int i = 0; i < state.getRowCount(); i++){
             PointListView pointListView = new PointListView(this);
             pointListPanel.add( pointListView);
             pointListView.setVisible(true);
             pointListViews.add(pointListView);
+            pointListView.setLat(state.getLatStringAt(i));
+            pointListView.setLon(state.getLonStringAt(i));
         }
+    }
+
+    @Override
+    public String getElementName() {
+        return State.POINT_LIST_PANEL_TAG;
     }
 
     public void removeRow(PointListView pointListView) {
@@ -240,7 +248,7 @@ public class PointListEmulationPanel extends JPanel implements CardName, Emulati
         }
 
         public String getLatStringAt(int index){
-            if(latStrings.size() >= index){
+            if(latStrings.size() <= index){
                 return "";
             }else{
                 return latStrings.get(index);
@@ -248,7 +256,7 @@ public class PointListEmulationPanel extends JPanel implements CardName, Emulati
         }
 
         public String getLonStringAt(int index){
-            if(lonStrings.size() >= index){
+            if(lonStrings.size() <= index){
                 return "";
             }else{
                 return lonStrings.get(index);
@@ -267,7 +275,7 @@ public class PointListEmulationPanel extends JPanel implements CardName, Emulati
                 Element pointElement = new Element(POINT_TAG);
                 pointElement.setAttribute("lat", getLatStringAt(i));
                 pointElement.setAttribute("lon", getLonStringAt(i));
-                pointListElement.addContent(pointElement);
+                pointsListElement.addContent(pointElement);
             }
 
             pointListElement.addContent(pointsListElement);

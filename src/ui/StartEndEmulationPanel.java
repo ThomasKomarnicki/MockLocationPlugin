@@ -5,6 +5,7 @@ import dataValidation.ValidationResult;
 import model.GpsEmulationModel;
 import model.GpsPoint;
 import model.PersistableState;
+import model.PersistableUiElement;
 import org.jdom.Element;
 import org.jetbrains.annotations.Nullable;
 import presenter.PanelPresenter;
@@ -18,11 +19,7 @@ import java.util.List;
 /**
  * Created by Thomas on 12/20/2015.
  */
-@State(
-        name = "StartEndPersistence",
-        storages = @Storage(id = "other", file = StoragePathMacros.APP_CONFIG+"/start_end.xml")
-)
-public class StartEndEmulationPanel extends JPanel implements CardName, EmulationPanel, PersistentStateComponent<StartEndEmulationPanel.State> {
+public class StartEndEmulationPanel extends JPanel implements CardName, EmulationPanel, PersistableUiElement<StartEndEmulationPanel.State> {
 
     private JPanel gpsPathPanel;
     private JTextField startLocationLat;
@@ -111,7 +108,6 @@ public class StartEndEmulationPanel extends JPanel implements CardName, Emulatio
     @Nullable
     @Override
     public State getState() {
-        System.out.println("saved state");
         State state = new State();
         state.startLat = startLocationLat.getText();
         state.startLon = startLocationLon.getText();
@@ -123,8 +119,7 @@ public class StartEndEmulationPanel extends JPanel implements CardName, Emulatio
     }
 
     @Override
-    public void loadState(State state) {
-        System.out.println("loaded state");
+    public void restoreState(State state) {
         startLocationLat.setText(state.startLat);
         startLocationLon.setText(state.startLon);
         endLocationLat.setText(state.endLat);
@@ -133,6 +128,13 @@ public class StartEndEmulationPanel extends JPanel implements CardName, Emulatio
         stepsTextField.setText(state.steps);
         timeIntervalField.setText(state.timeBetweenSteps);
     }
+
+    @Override
+    public String getElementName() {
+        return State.START_END_PANEL_TAG;
+    }
+
+
 
     public static class State implements PersistableState{
 

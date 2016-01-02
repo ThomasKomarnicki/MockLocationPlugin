@@ -9,6 +9,7 @@ import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import model.PersistableState;
+import model.PersistableUiElement;
 import model.event.EmulationStartedEvent;
 import model.event.EmulationStoppedEvent;
 import org.jdom.Element;
@@ -30,7 +31,7 @@ import java.awt.event.ItemListener;
 /**
  * Created by Thomas on 12/18/2015.
  */
-public class MainToolWindow implements ToolWindowFactory, ProgressCallback {
+public class MainToolWindow implements ToolWindowFactory, ProgressCallback, PersistableUiElement<MainToolWindow.State> {
 
     private ToolWindow mainToolWindow;
     private JPanel toolWindowContent;
@@ -90,10 +91,6 @@ public class MainToolWindow implements ToolWindowFactory, ProgressCallback {
         emulationContentPanel.revalidate();
         emulationContentPanel.updateUI();
 
-//        settingsService = ServiceManager.getService(SettingsService.class);
-//        settingsService.setToolWindowState(new State(this));
-//        settingsService.setStartEndState(startEndEmulationPanel.getState());
-//        settingsService.setPointListState(pointListEmulationPanel.getState());
     }
 
     @Override
@@ -160,9 +157,22 @@ public class MainToolWindow implements ToolWindowFactory, ProgressCallback {
         return pointListEmulationPanel;
     }
 
+    @Override
     public State getState(){
         return new State(this);
     }
+
+    @Override
+    public void restoreState(State state) {
+        portTextField.setText(state.port);
+        int selectedPanel = state.selectedPanel;
+    }
+
+    @Override
+    public String getElementName() {
+        return State.TOOL_WINDOW_TAG;
+    }
+
 
     public static class State implements PersistableState{
         private static final String TOOL_WINDOW_TAG = "MainToolWindow";

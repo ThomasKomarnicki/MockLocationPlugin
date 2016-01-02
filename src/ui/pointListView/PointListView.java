@@ -116,4 +116,12 @@ public class PointListView extends JPanel {
     public JTextField getLonTextField() {
         return lonTextField;
     }
+
+    public void setLat(String latString) {
+        latTextField.setText(latString);
+    }
+
+    public void setLon(String lonString) {
+        lonTextField.setText(lonString);
+    }
 }
