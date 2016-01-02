@@ -3,6 +3,7 @@ package service;
 
 import com.google.common.eventbus.EventBus;
 import com.intellij.openapi.application.ApplicationManager;
+import exception.AndroidConnectionException;
 import model.GpsEmulationModel;
 import model.GpsPoint;
 import model.event.EmulationStoppedEvent;
@@ -61,6 +62,9 @@ public class EmulationService {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
 //                    e.printStackTrace();
+                } catch (AndroidConnectionException e) {
+                    e.printStackTrace();
+                    
                 }
             }
 

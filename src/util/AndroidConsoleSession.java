@@ -1,5 +1,7 @@
 package util;
 
+import exception.AndroidConnectionException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -27,12 +29,13 @@ public class AndroidConsoleSession {
         this(5554);
     }
 
-    public void startSession() throws IOException {
+    public void startSession() throws IOException, AndroidConnectionException {
         try {
             telnetSocket = new Socket("localhost", port);
         }catch (ConnectException e){
-            // todo couldn't connect to emulator
             e.printStackTrace();
+            // todo couldn't connect to emulator
+            throw new AndroidConnectionException();
         }
 
         out = new PrintWriter(telnetSocket.getOutputStream(), true);
