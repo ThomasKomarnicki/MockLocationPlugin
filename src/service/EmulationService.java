@@ -7,6 +7,7 @@ import exception.AndroidConnectionException;
 import model.GpsEmulationModel;
 import model.GpsPoint;
 import model.event.EmulationStoppedEvent;
+import model.event.EmulatorErrorEvent;
 import util.AndroidConsoleSession;
 
 import java.io.IOException;
@@ -26,7 +27,7 @@ public class EmulationService {
 
     private ProgressCallback progressCallback;
 
-    public void startEmulation(final GpsEmulationModel gpsEmulationModel, final int port){
+    public void startEmulation(final GpsEmulationModel gpsEmulationModel, final int port) {
         final List<GpsPoint> pathPoints = gpsEmulationModel.getPoints();
 
         if(telnetFuture != null && !telnetFuture.isDone()){
@@ -63,8 +64,8 @@ public class EmulationService {
                 } catch (InterruptedException e) {
 //                    e.printStackTrace();
                 } catch (AndroidConnectionException e) {
-                    e.printStackTrace();
-                    
+//                    e.printStackTrace();
+                    getBus().post(new EmulatorErrorEvent(e.getMessage()));
                 }
             }
 

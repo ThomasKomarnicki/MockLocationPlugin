@@ -4,6 +4,7 @@ import com.google.common.eventbus.Subscribe;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
@@ -12,6 +13,7 @@ import model.PersistableState;
 import model.PersistableUiElement;
 import model.event.EmulationStartedEvent;
 import model.event.EmulationStoppedEvent;
+import model.event.EmulatorErrorEvent;
 import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
 import presenter.PanelPresenter;
@@ -50,6 +52,7 @@ public class MainToolWindow implements ToolWindowFactory, ProgressCallback, Pers
     private PanelPresenter panelPresenter;
 
     private ToolWindowPresenter toolWindowPresenter;
+    private Project project;
 
     public MainToolWindow(){
 
@@ -93,10 +96,13 @@ public class MainToolWindow implements ToolWindowFactory, ProgressCallback, Pers
         emulationContentPanel.revalidate();
         emulationContentPanel.updateUI();
 
+        EmulationService.getBus().register(this);
+
     }
 
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
+        this.project = project;
         this.mainToolWindow = toolWindow;
         ContentFactory factory = ContentFactory.SERVICE.getInstance();
         Content content = factory.createContent(this.toolWindowContent, "", false);
@@ -132,9 +138,23 @@ public class MainToolWindow implements ToolWindowFactory, ProgressCallback, Pers
             @Override
             public void run() {
                 emulationActionButton.setText("Stop GPS Emulation");
+
             }
         });
 
+    }
+
+    @Subscribe
+    public void onEmulatorError(final EmulatorErrorEvent event){
+        ApplicationManager.getApplication().invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                onGpsEmulationStopped(null);
+                EmulatorErrorDialog emulatorErrorDialog = new EmulatorErrorDialog(project,true,event.getMessage());
+                emulatorErrorDialog.show();
+
+            }
+        });
     }
 
     public int getPort(){

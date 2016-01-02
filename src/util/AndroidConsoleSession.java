@@ -33,7 +33,7 @@ public class AndroidConsoleSession {
         try {
             telnetSocket = new Socket("localhost", port);
         }catch (ConnectException e){
-            e.printStackTrace();
+//            e.printStackTrace();
             // todo couldn't connect to emulator
             throw new AndroidConnectionException();
         }
