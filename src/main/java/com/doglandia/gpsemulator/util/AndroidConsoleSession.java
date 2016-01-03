@@ -44,7 +44,7 @@ public class AndroidConsoleSession {
     }
 
     public void sendGpsCoords(double lat, double lon){
-        String command = "geo fix " + lon + " " + lat;
+        String command = "geo fix " + trimCoordinate(lon) + " " + trimCoordinate(lat);
         out.println(command);
         System.out.println(command);
 //        try {
@@ -52,6 +52,14 @@ public class AndroidConsoleSession {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
+    }
+
+    private String trimCoordinate(double coordinate){
+        String s = String.valueOf(coordinate);
+        if(s.length() > 12) {
+            s = s.substring(0, 12);
+        }
+        return s;
     }
 
     public void endSession(){
