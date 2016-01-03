@@ -89,7 +89,7 @@ public class DataValidator {
     public static String validateLonString(String lon, String lonName){
         if(NumberUtils.isNumber(lon)){
             double startLat = Double.valueOf(lon);
-            if(startLat < -90 || startLat > 90){
+            if(startLat < -180 || startLat > 180){
                 return lonName + " must be a valid number between -180 and 180<br>";
             }
         }else{
