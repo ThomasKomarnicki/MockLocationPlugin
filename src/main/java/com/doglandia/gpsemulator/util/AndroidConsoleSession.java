@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.net.ConnectException;
 import java.net.Socket;
 
@@ -55,10 +56,12 @@ public class AndroidConsoleSession {
     }
 
     private String trimCoordinate(double coordinate){
-        String s = String.valueOf(coordinate);
-        if(s.length() > 12) {
-            s = s.substring(0, 12);
-        }
+        BigDecimal bigDecimal = BigDecimal.valueOf(coordinate);
+        bigDecimal.setScale(6,BigDecimal.ROUND_UP);
+        String s = bigDecimal.toPlainString();
+//        if(s.length() > 12) {
+//            s = s.substring(0, 12);
+//        }
         return s;
     }
 
