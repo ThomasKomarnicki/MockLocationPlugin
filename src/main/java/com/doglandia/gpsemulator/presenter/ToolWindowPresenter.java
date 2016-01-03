@@ -39,6 +39,7 @@ public class ToolWindowPresenter implements ToolWindowPresenterInterface {
         persistableStates.add(mainToolWindow.getState());
         persistableStates.add(mainToolWindow.getStartEndEmulationPanel().getState());
         persistableStates.add(mainToolWindow.getPointListEmulationPanel().getState());
+        persistableStates.add(mainToolWindow.getSinglePointEmulationPanel().getState());
 
         return persistableStates;
     }
