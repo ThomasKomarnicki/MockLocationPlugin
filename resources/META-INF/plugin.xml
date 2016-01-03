@@ -30,13 +30,13 @@
           <toolWindow
                   id="Gps Emulator"
                   anchor="right"
-                  factoryClass="ui.MainToolWindow"
+                  factoryClass="com.doglandia.gpsemulator.ui.MainToolWindow"
                   secondary="true"
                   icon="/icons/gps_icon.png">
           </toolWindow>
 
-      <applicationService serviceInterface="service.EmulationService" serviceImplementation="service.EmulationService" />
-    <applicationService serviceInterface="service.SettingsService" serviceImplementation="service.SettingsService"/>
+      <applicationService serviceInterface="com.doglandia.gpsemulator.service.EmulationService" serviceImplementation="com.doglandia.gpsemulator.service.EmulationService" />
+    <applicationService serviceInterface="com.doglandia.gpsemulator.service.SettingsService" serviceImplementation="com.doglandia.gpsemulator.service.SettingsService"/>
 
   </extensions>
 
