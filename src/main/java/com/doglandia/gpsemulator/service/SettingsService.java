@@ -39,13 +39,15 @@ public class SettingsService implements PersistentStateComponent<Element>{
     @Nullable
     @Override
     public Element getState() {
-        System.out.println("saving settings state");
-        LOG.debug("saving settings state");
+//        System.out.println("saving settings state");
+//        LOG.debug("saving settings state");
         final Element element = new Element(SETTINGS_TAG);
 
-        List<PersistableState> states = toolWindowPresenter.getPersistableStates();
-        for(PersistableState state : states){
-            element.addContent(state.save());
+        if(toolWindowPresenter != null) {
+            List<PersistableState> states = toolWindowPresenter.getPersistableStates();
+            for (PersistableState state : states) {
+                element.addContent(state.save());
+            }
         }
 
 
@@ -54,8 +56,8 @@ public class SettingsService implements PersistentStateComponent<Element>{
 
     @Override
     public void loadState(Element state) {
-        System.out.println("loading settings state");
-        LOG.debug("loading settings state");
+//        System.out.println("loading settings state");
+//        LOG.debug("loading settings state");
         if(toolWindowPresenter != null){
             toolWindowPresenter.loadPersistableStates(state);
         }else{
