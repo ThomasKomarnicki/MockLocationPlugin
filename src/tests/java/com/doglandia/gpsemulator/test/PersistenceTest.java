@@ -1,4 +1,4 @@
-package com.doglandia.gpsemulator;
+package com.doglandia.gpsemulator.test;
 
 import com.doglandia.gpsemulator.model.PersistableState;
 import com.doglandia.gpsemulator.presenter.ToolWindowPresenterInterface;
@@ -14,7 +14,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.doglandia.gpsemulator.TestUtils.*;
 import static org.junit.Assert.*;
 
 /**
@@ -76,22 +75,22 @@ public class PersistenceTest {
 
         // add values to the fields using reflection,
         // test to make sure the corresponding states come out with these values on the other side
-        setTextOfField(toolWindowPresenter.mainToolWindow, "portTextField","1234");
+        TestUtils.setTextOfField(toolWindowPresenter.mainToolWindow, "portTextField","1234");
 
-        setTextOfField(toolWindowPresenter.startEndPanel, "startLocationLat","1");
-        setTextOfField(toolWindowPresenter.startEndPanel, "startLocationLon","2");
-        setTextOfField(toolWindowPresenter.startEndPanel, "endLocationLat","3");
-        setTextOfField(toolWindowPresenter.startEndPanel, "endLocationLon","4");
-        setTextOfField(toolWindowPresenter.startEndPanel, "stepsTextField","5");
-        setTextOfField(toolWindowPresenter.startEndPanel, "timeIntervalField","6");
+        TestUtils.setTextOfField(toolWindowPresenter.startEndPanel, "startLocationLat","1");
+        TestUtils.setTextOfField(toolWindowPresenter.startEndPanel, "startLocationLon","2");
+        TestUtils.setTextOfField(toolWindowPresenter.startEndPanel, "endLocationLat","3");
+        TestUtils.setTextOfField(toolWindowPresenter.startEndPanel, "endLocationLon","4");
+        TestUtils.setTextOfField(toolWindowPresenter.startEndPanel, "stepsTextField","5");
+        TestUtils.setTextOfField(toolWindowPresenter.startEndPanel, "timeIntervalField","6");
 
-        setTextOfField(toolWindowPresenter.singlePointPanel, "latTextField","1");
-        setTextOfField(toolWindowPresenter.singlePointPanel, "lonTextField","2");
+        TestUtils.setTextOfField(toolWindowPresenter.singlePointPanel, "latTextField","1");
+        TestUtils.setTextOfField(toolWindowPresenter.singlePointPanel, "lonTextField","2");
 
 
-        setTextOfField(toolWindowPresenter.pointListPanel, "timeIntervalField","5");
-        setFieldSelection(toolWindowPresenter.pointListPanel, "loopCheckBox", true);
-        setFieldSelection(toolWindowPresenter.pointListPanel, "reverseCheckBox", true);
+        TestUtils.setTextOfField(toolWindowPresenter.pointListPanel, "timeIntervalField","5");
+        TestUtils.setFieldSelection(toolWindowPresenter.pointListPanel, "loopCheckBox", true);
+        TestUtils.setFieldSelection(toolWindowPresenter.pointListPanel, "reverseCheckBox", true);
         List<PointListView> pointListViews = new ArrayList<>();
         for(int i = 0; i < 3; i++) {
             PointListView pointListView = new PointListView(toolWindowPresenter.pointListPanel);
@@ -99,7 +98,7 @@ public class PersistenceTest {
             pointListView.setLon(""+i);
             pointListViews.add(pointListView);
         }
-        setFieldValue(toolWindowPresenter.pointListPanel, "pointListViews", pointListViews);
+        TestUtils.setFieldValue(toolWindowPresenter.pointListPanel, "pointListViews", pointListViews);
 
         // do save / load conversion
         Element savedSettings = settingsService.getState();

@@ -1,4 +1,4 @@
-package com.doglandia.gpsemulator;
+package com.doglandia.gpsemulator.test;
 
 import com.doglandia.gpsemulator.dataValidation.DataValidator;
 import org.junit.Test;

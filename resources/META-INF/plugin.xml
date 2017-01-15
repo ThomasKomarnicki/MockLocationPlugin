@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>com.doglandia.GpsEmulator</id>
   <name>Gps Emulator</name>
-  <version>1.0</version>
+  <version>1.2</version>
   <vendor email="komarnicki.thomas@gmail.com" >Doglandia</vendor>
 
   <description><![CDATA[

@@ -1,4 +1,4 @@
-package com.doglandia.gpsemulator;
+package com.doglandia.gpsemulator.test;
 
 import javax.swing.*;
 import java.lang.reflect.Field;
